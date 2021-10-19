@@ -83,7 +83,7 @@ public class PeticionDTO {
     public static PeticionDTO fromEntity(Peticion peticion) {
         return new PeticionDTO(
                 peticion.getId(),
-                peticion.getPaciente(),
+                PacienteDTO.fromEntity(peticion.getPaciente()),
                 peticion.getObraSocial(),
                 peticion.getFechaCarga(),
                 EstudioDTO.fromEntities(peticion.getEstudios()),

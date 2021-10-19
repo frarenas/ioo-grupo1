@@ -45,7 +45,7 @@ public class EstudioDTO {
         return new EstudioDTO(
                 estudio.getCodigo(),
                 estudio.getPractica(),
-                estudio.getResultadoPeticion()
+                ResultadoPeticionDTO.fromEntity(estudio.getResultadoPeticion())
         );
     }
 
