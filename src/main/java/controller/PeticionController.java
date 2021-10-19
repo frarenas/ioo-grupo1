@@ -2,8 +2,8 @@ package controller;
 
 import model.Estudio;
 import model.Paciente;
-import model.Peticion;
 import model.Sucursal;
+import model.dto.PeticionDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -39,14 +39,14 @@ public class PeticionController {
         //TODO: implementar
     }
 
-    public List<Peticion> buscarPeticionesDelPaciente(
+    public List<PeticionDTO> buscarPeticionesDelPaciente(
             String dni
     ) {
         //TODO: implementar
         return null;
     }
 
-    public List<Peticion> buscarPeticionesPorSucursal(
+    public List<PeticionDTO> buscarPeticionesPorSucursal(
             Integer numeroSucursal
     ) {
         //TODO: implementar
@@ -54,12 +54,12 @@ public class PeticionController {
     }
 
     public void derivarPeticiones(
-            List<Peticion> peticiones
+            List<PeticionDTO> peticiones
     ) {
         //TODO: implementar
     }
 
-    public List<Peticion> obtenerPeticionesCriticas() {
+    public List<PeticionDTO> obtenerPeticionesCriticas() {
         //TODO: implementar
         return null;
     }

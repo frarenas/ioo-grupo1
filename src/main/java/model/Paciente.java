@@ -8,6 +8,15 @@ public class Paciente {
     private Sexo sexo;
     private Integer edad;
 
+    public Paciente(String dni, String nombre, String domicilio, String email, Sexo sexo, Integer edad) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.domicilio = domicilio;
+        this.email = email;
+        this.sexo = sexo;
+        this.edad = edad;
+    }
+
     public String getDni() {
         return dni;
     }

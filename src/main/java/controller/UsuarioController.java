@@ -1,8 +1,6 @@
 package controller;
 
 import model.Rol;
-import model.Sucursal;
-import model.Usuario;
 
 import java.util.Date;
 

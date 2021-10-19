@@ -1,5 +1,6 @@
 package model.dto;
 
+import model.Paciente;
 import model.Sexo;
 
 public class PacienteDTO {
@@ -56,5 +57,10 @@ public class PacienteDTO {
 
     public void setEdad(Integer edad) {
         this.edad = edad;
+    }
+
+    public PacienteDTO fromEntity(Paciente paciente) {
+        //TODO: Implementar
+        return null;
     }
 }

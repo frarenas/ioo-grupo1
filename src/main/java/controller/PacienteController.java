@@ -1,8 +1,15 @@
 package controller;
 
+import model.Paciente;
 import model.Sexo;
+import model.dto.PacienteDTO;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PacienteController {
+
+    public static Map<String, Paciente> pacienteDB = new HashMap<>();
 
     public void altaPaciente(
             String dni,
@@ -12,7 +19,8 @@ public class PacienteController {
             Sexo sexo,
             Integer edad
     ) {
-        //TODO: implementar
+        Paciente paciente = new Paciente(dni, nombre, domicilio, email, sexo, edad);
+        pacienteDB.put(dni, paciente);
     }
 
     public void modificarPaciente(
@@ -23,18 +31,27 @@ public class PacienteController {
             Sexo sexo,
             Integer edad
     ) {
-        //TODO: implementar
+        Paciente paciente = pacienteDB.get(dni);
+        paciente.setDni(dni);
+        paciente.setNombre(nombre);
+        paciente.setDomicilio(domicilio);
+        paciente.setEmail(email);
+        paciente.setSexo(sexo);
+        paciente.setEdad(edad);
+
+        pacienteDB.put(dni, paciente);
     }
 
     public void bajaPaciente(
             String dni
     ) {
-        //TODO: implementar
+        pacienteDB.remove(dni);
     }
 
-    public void buscarPaciente(
+    public PacienteDTO buscarPaciente(
             String dni
     ) {
-        //TODO: implementar
+        Paciente paciente = pacienteDB.get(dni);
+        return null;
     }
 }

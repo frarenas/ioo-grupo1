@@ -1,17 +1,16 @@
 package controller;
 
-import model.Sucursal;
 import model.Usuario;
+import model.dto.SucursalDTO;
 
 public class SucursalController {
 
-    public Sucursal altaSucursal(
+    public void altaSucursal(
             long numero,
             String direccion,
             Usuario responsableTecnico
     ) {
         //TODO: Implementar
-        return null;
     }
 
     public void modificarSucursal(
@@ -33,7 +32,7 @@ public class SucursalController {
         //TODO: Implementar
     }
 
-    public Sucursal buscarSucursal(long numero) {
+    public SucursalDTO buscarSucursal(long numero) {
         //TODO: Implementar
         return null;
     }
