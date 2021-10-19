@@ -11,6 +11,15 @@ public class PacienteDTO {
     private Sexo sexo;
     private Integer edad;
 
+    public PacienteDTO(String dni, String nombre, String domicilio, String email, Sexo sexo, Integer edad) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.domicilio = domicilio;
+        this.email = email;
+        this.sexo = sexo;
+        this.edad = edad;
+    }
+
     public String getDni() {
         return dni;
     }
@@ -59,8 +68,14 @@ public class PacienteDTO {
         this.edad = edad;
     }
 
-    public PacienteDTO fromEntity(Paciente paciente) {
-        //TODO: Implementar
-        return null;
+    public static PacienteDTO fromEntity(Paciente paciente) {
+        return new PacienteDTO(
+                paciente.getDni(),
+                paciente.getNombre(),
+                paciente.getDomicilio(),
+                paciente.getEmail(),
+                paciente.getSexo(),
+                paciente.getEdad()
+        );
     }
 }

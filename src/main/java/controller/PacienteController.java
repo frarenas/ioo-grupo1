@@ -52,6 +52,6 @@ public class PacienteController {
             String dni
     ) {
         Paciente paciente = pacienteDB.get(dni);
-        return null;
+        return PacienteDTO.fromEntity(paciente);
     }
 }
