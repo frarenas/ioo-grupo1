@@ -2,13 +2,18 @@ package controller;
 
 import model.Estudio;
 import model.Paciente;
+import model.Peticion;
 import model.Sucursal;
 import model.dto.PeticionDTO;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PeticionController {
+
+    public static Map<Long, Peticion> peticionDB = new HashMap<>();
 
     public void altaPeticion(
             Paciente paciente,

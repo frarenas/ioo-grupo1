@@ -1,8 +1,9 @@
 package model.dto;
 
+import model.Peticion;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class PeticionDTO {
     private Long id;
@@ -12,6 +13,16 @@ public class PeticionDTO {
     private List<EstudioDTO> estudios;
     private Date fechaEntrega;
     private SucursalDTO sucursal;
+
+    public PeticionDTO(Long id, PacienteDTO paciente, String obraSocial, Date fechaCarga, List<EstudioDTO> estudios, Date fechaEntrega, SucursalDTO sucursal) {
+        this.id = id;
+        this.paciente = paciente;
+        this.obraSocial = obraSocial;
+        this.fechaCarga = fechaCarga;
+        this.estudios = estudios;
+        this.fechaEntrega = fechaEntrega;
+        this.sucursal = sucursal;
+    }
 
     public Long getId() {
         return id;
@@ -67,5 +78,17 @@ public class PeticionDTO {
 
     public void setSucursal(SucursalDTO sucursal) {
         this.sucursal = sucursal;
+    }
+
+    public static PeticionDTO fromEntity(Peticion peticion) {
+        return new PeticionDTO(
+                peticion.getId(),
+                peticion.getPaciente(),
+                peticion.getObraSocial(),
+                peticion.getFechaCarga(),
+                EstudioDTO.fromEntities(peticion.getEstudios()),
+                peticion.getFechaEntrega(),
+                peticion.getSucursal()
+        );
     }
 }
