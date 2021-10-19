@@ -1,21 +1,15 @@
-package model;
+package model.dto;
 
-public class Paciente {
+import model.Paciente;
+import model.Sexo;
+
+public class PacienteDTO {
     private String dni;
     private String nombre;
     private String domicilio;
     private String email;
     private Sexo sexo;
     private Integer edad;
-
-    public Paciente(String dni, String nombre, String domicilio, String email, Sexo sexo, Integer edad) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.domicilio = domicilio;
-        this.email = email;
-        this.sexo = sexo;
-        this.edad = edad;
-    }
 
     public String getDni() {
         return dni;
@@ -65,7 +59,8 @@ public class Paciente {
         this.edad = edad;
     }
 
-    public void actualizarDatos(String dni, String nombre, String domicilio, String email, Sexo sexo, Integer edad){
-        //TODO
+    public PacienteDTO fromEntity(Paciente paciente) {
+        //TODO: Implementar
+        return null;
     }
 }
