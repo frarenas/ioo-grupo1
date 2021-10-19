@@ -1,6 +1,7 @@
 package model.dto;
 
 import model.Rol;
+import model.Usuario;
 
 import java.util.Date;
 
@@ -13,6 +14,17 @@ public class UsuarioDTO {
     private String dni;
     private Date fechaNacimiento;
     private Rol rol;
+
+    public UsuarioDTO(String nombreUsuario, String email, String contrasena, String nombre, String domicilio, String dni, Date fechaNacimiento, Rol rol) {
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.domicilio = domicilio;
+        this.dni = dni;
+        this.fechaNacimiento = fechaNacimiento;
+        this.rol = rol;
+    }
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -76,5 +88,16 @@ public class UsuarioDTO {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public static UsuarioDTO fromEntity(Usuario usuario) {
+        return new UsuarioDTO(usuario.getNombreUsuario(),
+                usuario.getEmail(),
+                usuario.getContrasena(),
+                usuario.getNombre(),
+                usuario.getDomicilio(),
+                usuario.getDni(),
+                usuario.getFechaNacimiento(),
+                usuario.getRol());
     }
 }
