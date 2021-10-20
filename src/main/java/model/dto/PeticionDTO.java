@@ -88,7 +88,7 @@ public class PeticionDTO {
                 peticion.getFechaCarga(),
                 EstudioDTO.fromEntities(peticion.getEstudios()),
                 peticion.getFechaEntrega(),
-                peticion.getSucursal()
+                SucursalDTO.fromEntity(peticion.getSucursal())
         );
     }
 }

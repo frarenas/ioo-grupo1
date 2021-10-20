@@ -1,7 +1,6 @@
 package model.dto;
 
 import model.Estudio;
-import model.Paciente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class EstudioDTO {
     public static EstudioDTO fromEntity(Estudio estudio) {
         return new EstudioDTO(
                 estudio.getCodigo(),
-                estudio.getPractica(),
+                PracticaDTO.fromEntity(estudio.getPractica()),
                 ResultadoPeticionDTO.fromEntity(estudio.getResultadoPeticion())
         );
     }
