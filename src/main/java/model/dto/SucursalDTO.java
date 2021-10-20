@@ -1,15 +1,23 @@
 package model.dto;
 
+import model.Sucursal;
+
 public class SucursalDTO {
-    private Integer numero;
+    private Long numero;
     private String direccion;
     private UsuarioDTO responsableTecnico;
 
-    public Integer getNumero() {
+    public SucursalDTO(Long numero, String direccion, UsuarioDTO responsableTecnico) {
+        this.numero = numero;
+        this.direccion = direccion;
+        this.responsableTecnico = responsableTecnico;
+    }
+
+    public Long getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
 
@@ -27,5 +35,13 @@ public class SucursalDTO {
 
     public void setResponsableTecnico(UsuarioDTO responsableTecnico) {
         this.responsableTecnico = responsableTecnico;
+    }
+
+    public static SucursalDTO fromEntity(Sucursal sucursal) {
+        return new SucursalDTO(
+                sucursal.getNumero(),
+                sucursal.getDireccion(),
+                UsuarioDTO.fromEntity(sucursal.getResponsableTecnico())
+        );
     }
 }
