@@ -1,5 +1,8 @@
 package model.dto;
 
+import model.Paciente;
+import model.Practica;
+
 public class PracticaDTO {
     private Long codigo;
     private String nombre;
@@ -9,6 +12,17 @@ public class PracticaDTO {
     private Boolean valorReservado;
     private Integer cantHorasResultado;
     private Boolean activa;
+
+    public PracticaDTO(Long codigo, String nombre, GrupoPracticaDTO grupo, Long valorCriticoMin, Long valorCriticoMax, Boolean valorReservado, Integer cantHorasResultado, Boolean activa) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.grupo = grupo;
+        this.valorCriticoMin = valorCriticoMin;
+        this.valorCriticoMax = valorCriticoMax;
+        this.valorReservado = valorReservado;
+        this.cantHorasResultado = cantHorasResultado;
+        this.activa = activa;
+    }
 
     public Long getCodigo() {
         return codigo;
@@ -72,5 +86,18 @@ public class PracticaDTO {
 
     public void setActiva(Boolean activa) {
         this.activa = activa;
+    }
+
+    public static PracticaDTO fromEntity(Practica practica) {
+        return new PracticaDTO(
+                practica.getCodigo(),
+                practica.getNombre(),
+                GrupoPracticaDTO.fromEntity(practica.getGrupo()),
+                practica.getValorCriticoMin(),
+                practica.getValorCriticoMax(),
+                practica.getValorReservado(),
+                practica.getCantHorasResultado(),
+                practica.getActiva()
+        );
     }
 }
