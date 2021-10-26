@@ -5,6 +5,12 @@ public class Sucursal {
     private String direccion;
     private Usuario responsableTecnico;
 
+    public Sucursal(Long numero, String direccion, Usuario responsableTecnico) {
+        this.numero = numero;
+        this.direccion = direccion;
+        this.responsableTecnico = responsableTecnico;
+    }
+
     public Long getNumero() {
         return numero;
     }

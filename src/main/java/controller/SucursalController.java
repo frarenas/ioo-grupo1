@@ -1,16 +1,23 @@
 package controller;
 
+import model.Sucursal;
 import model.Usuario;
 import model.dto.SucursalDTO;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SucursalController {
+
+    public static Map<Long, Sucursal> sucursalDB = new HashMap<>();
 
     public void altaSucursal(
             long numero,
             String direccion,
             Usuario responsableTecnico
     ) {
-        //TODO: Implementar
+        Sucursal sucursal = new Sucursal(numero, direccion, responsableTecnico);
+        sucursalDB.put(numero, sucursal);
     }
 
     public void modificarSucursal(
@@ -18,22 +25,29 @@ public class SucursalController {
             String direccion,
             Usuario responsableTecnico
     ) {
-        //TODO: Implementar
+        Sucursal sucursal = sucursalDB.get(numero);
+        sucursal.setNumero(numero);
+        sucursal.setDireccion(direccion);
+        sucursal.setResponsableTecnico(responsableTecnico);
+
+        sucursalDB.put(numero, sucursal);
     }
 
     public void bajaSucursal(long numero) {
-        //TODO: Implementar
+        sucursalDB.remove(numero);
     }
 
     public void derivarPeticiones(
             long sucursalOrigen,
             long sucursalDestino
     ) {
-        //TODO: Implementar
+        //TODO: revisar si este metodo va aca
+        for (Sucursal sucursal: sucursalDB.values()) {
+        }
     }
 
     public SucursalDTO buscarSucursal(long numero) {
-        //TODO: Implementar
-        return null;
+        Sucursal sucursal = sucursalDB.get(numero);
+        return SucursalDTO.fromEntity(sucursal);
     }
 }
