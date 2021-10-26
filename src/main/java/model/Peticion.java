@@ -13,6 +13,16 @@ public class Peticion {
     private Date fechaEntrega;
     private Sucursal sucursal;
 
+    public Peticion(Long id, Paciente paciente, String obraSocial, Date fechaCarga, List<Estudio> estudios, Date fechaEntrega, Sucursal sucursal) {
+        this.id = id;
+        this.paciente = paciente;
+        this.obraSocial = obraSocial;
+        this.fechaCarga = fechaCarga;
+        this.estudios = estudios;
+        this.fechaEntrega = fechaEntrega;
+        this.sucursal = sucursal;
+    }
+
     public Long getId() {
         return id;
     }

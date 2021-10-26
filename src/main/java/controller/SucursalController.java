@@ -2,6 +2,7 @@ package controller;
 
 import model.Sucursal;
 import model.Usuario;
+import model.dto.PeticionDTO;
 import model.dto.SucursalDTO;
 
 import java.util.HashMap;
@@ -35,15 +36,6 @@ public class SucursalController {
 
     public void bajaSucursal(long numero) {
         sucursalDB.remove(numero);
-    }
-
-    public void derivarPeticiones(
-            long sucursalOrigen,
-            long sucursalDestino
-    ) {
-        //TODO: revisar si este metodo va aca
-        for (Sucursal sucursal: sucursalDB.values()) {
-        }
     }
 
     public SucursalDTO buscarSucursal(long numero) {
