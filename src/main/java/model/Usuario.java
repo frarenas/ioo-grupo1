@@ -12,6 +12,17 @@ public class Usuario {
     private Date fechaNacimiento;
     private Rol rol;
 
+    public Usuario(String nombreUsuario, String email, String contrasena, String nombre, String domicilio, String dni, Date fechaNacimiento, Rol rol) {
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.domicilio = domicilio;
+        this.dni = dni;
+        this.fechaNacimiento = fechaNacimiento;
+        this.rol = rol;
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }

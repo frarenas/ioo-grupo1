@@ -1,10 +1,15 @@
 package controller;
 
 import model.Rol;
+import model.Usuario;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UsuarioController {
+
+    public static Map<String, Usuario> usuarioDB = new HashMap<>();
 
     public void altaUsuario(
             String nombreUsuario,
@@ -16,7 +21,8 @@ public class UsuarioController {
             Date fechaNacimiento,
             Rol rol
     ) {
-        //TODO: Implementar
+        Usuario usuario = new Usuario(nombreUsuario,email,contrasena,nombre,domicilio,dni, fechaNacimiento, rol);
+        usuarioDB.put(dni, usuario);
     }
 
     public void modificarUsuario(
@@ -29,10 +35,20 @@ public class UsuarioController {
             Date fechaNacimiento,
             Rol rol
     ) {
-        //TODO: Implementar
+        Usuario usuario = usuarioDB.get(dni);
+        usuario.setNombreUsuario(nombreUsuario);
+        usuario.setEmail(email);
+        usuario.setContrasena(contrasena);
+        usuario.setNombre(nombre);
+        usuario.setDomicilio(domicilio);
+        usuario.setDni(dni);
+        usuario.setFechaNacimiento(fechaNacimiento);
+        usuario.setRol(rol);
+
+        usuarioDB.put(dni, usuario);
     }
 
     public void bajaUsuario(String dni) {
-        //TODO: Implementar
+        usuarioDB.remove(dni);
     }
 }

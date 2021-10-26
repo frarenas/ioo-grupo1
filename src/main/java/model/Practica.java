@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public class Practica {
     private Long codigo;
     private String nombre;
@@ -11,6 +9,17 @@ public class Practica {
     private Boolean valorReservado;
     private Integer cantHorasResultado;
     private Boolean activa;
+
+    public Practica(Long codigo, String nombre, GrupoPractica grupo, Long valorCriticoMin, Long valorCriticoMax, Boolean valorReservado, Integer cantHorasResultado, Boolean activa) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.grupo = grupo;
+        this.valorCriticoMin = valorCriticoMin;
+        this.valorCriticoMax = valorCriticoMax;
+        this.valorReservado = valorReservado;
+        this.cantHorasResultado = cantHorasResultado;
+        this.activa = activa;
+    }
 
     public Long getCodigo() {
         return codigo;
@@ -76,20 +85,4 @@ public class Practica {
         this.activa = activa;
     }
 
-    public void cambiarGrupo(GrupoPractica grupoPractica){
-        //TODO
-    }
-
-    public void actualizarDatos(
-            Long codigo,
-            String nombre,
-            GrupoPractica grupo,
-            Long valorCriticoMin,
-            Long valorCriticoMax,
-            Boolean valorReservado,
-            Integer cantHorasResultado,
-            Boolean activa
-    ){
-        //TODO
-    }
 }
