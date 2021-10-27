@@ -1,5 +1,7 @@
 package model;
 
+import model.dto.UsuarioDTO;
+
 import java.util.Date;
 
 public class Usuario {
@@ -21,6 +23,17 @@ public class Usuario {
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
         this.rol = rol;
+    }
+
+    public Usuario(UsuarioDTO usuarioDTO) {
+        this.nombreUsuario = usuarioDTO.getNombreUsuario();
+        this.email = usuarioDTO.getEmail();
+        this.contrasena = usuarioDTO.getContrasena();
+        this.nombre = usuarioDTO.getNombre();
+        this.domicilio = usuarioDTO.getDomicilio();
+        this.dni = usuarioDTO.getDni();
+        this.fechaNacimiento = usuarioDTO.getFechaNacimiento();
+        this.rol = usuarioDTO.getRol();
     }
 
     public String getNombreUsuario() {

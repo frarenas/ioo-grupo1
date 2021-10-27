@@ -5,6 +5,7 @@ import model.Paciente;
 import model.Peticion;
 import model.Sucursal;
 import model.dto.PeticionDTO;
+import model.dto.SucursalDTO;
 
 import java.util.*;
 
@@ -65,7 +66,7 @@ public class PeticionController {
     }
 
     public List<PeticionDTO> buscarPeticionesPorSucursal(
-            Integer numeroSucursal
+            Long numeroSucursal
     ) {
         Collection<Peticion> peticiones = peticionDB.values();
         List<PeticionDTO> peticionesSucursal = new ArrayList<>();
@@ -79,11 +80,11 @@ public class PeticionController {
 
     public void derivarPeticiones(
             List<PeticionDTO> peticiones,
-            Sucursal sucursal
+            SucursalDTO sucursal
     ) {
         for (PeticionDTO peticionDTO : peticiones) {
             Peticion peticion = peticionDB.get(peticionDTO.getId());
-            peticion.setSucursal(sucursal);
+            peticion.setSucursal(new Sucursal(sucursal));
             peticionDB.put(peticionDTO.getId(), peticion);
         }
 

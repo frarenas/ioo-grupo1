@@ -2,10 +2,12 @@ package controller;
 
 import model.Sucursal;
 import model.Usuario;
+import model.dto.EstudioDTO;
 import model.dto.PeticionDTO;
 import model.dto.SucursalDTO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SucursalController {
@@ -34,8 +36,33 @@ public class SucursalController {
         sucursalDB.put(numero, sucursal);
     }
 
-    public void bajaSucursal(long numero) {
-        sucursalDB.remove(numero);
+    public String bajaSucursal(long numero, SucursalDTO sucursalDestino) {
+        PeticionController peticionController = new PeticionController();
+        Boolean peticionesFinalizadas = false;
+
+        List<PeticionDTO> peticionDTOS = peticionController.buscarPeticionesPorSucursal(numero);
+
+        for (PeticionDTO peticionDTO: peticionDTOS) {
+
+            for (EstudioDTO estudioDTO: peticionDTO.getEstudios()) {
+                if (estudioDTO.getResultadoPeticion() != null){
+                    peticionesFinalizadas = true;
+                    break;
+                }
+            }
+            if (peticionesFinalizadas)
+                break;
+        }
+        if (!peticionesFinalizadas){
+            peticionController.derivarPeticiones(peticionDTOS, sucursalDestino);
+
+            sucursalDB.remove(numero);
+            return "Se elimino la sucursal correctamente";
+        }else{
+            return "No se puede eliminar la sucursal porque tiene peticiones finalizadas";
+        }
+
+
     }
 
     public SucursalDTO buscarSucursal(long numero) {

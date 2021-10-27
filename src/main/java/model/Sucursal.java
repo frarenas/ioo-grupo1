@@ -1,5 +1,7 @@
 package model;
 
+import model.dto.SucursalDTO;
+
 public class Sucursal {
     private Long numero;
     private String direccion;
@@ -9,6 +11,12 @@ public class Sucursal {
         this.numero = numero;
         this.direccion = direccion;
         this.responsableTecnico = responsableTecnico;
+    }
+
+    public Sucursal(SucursalDTO sucursalDTO) {
+        this.numero = sucursalDTO.getNumero();
+        this.direccion = sucursalDTO.getDireccion();
+        this.responsableTecnico = new Usuario(sucursalDTO.getResponsableTecnico());
     }
 
     public Long getNumero() {
