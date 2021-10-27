@@ -1,5 +1,7 @@
 package model;
 
+import model.dto.PacienteDTO;
+
 public class Paciente {
     private String dni;
     private String nombre;
@@ -15,6 +17,15 @@ public class Paciente {
         this.email = email;
         this.sexo = sexo;
         this.edad = edad;
+    }
+
+    public Paciente(PacienteDTO pacienteDTO) {
+        this.dni = pacienteDTO.getDni();
+        this.nombre = pacienteDTO.getNombre();
+        this.domicilio = pacienteDTO.getDomicilio();
+        this.email = pacienteDTO.getEmail();
+        this.sexo = pacienteDTO.getSexo();
+        this.edad = pacienteDTO.getEdad();
     }
 
     public String getDni() {

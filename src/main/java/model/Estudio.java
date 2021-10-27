@@ -1,11 +1,21 @@
 package model;
 
+import model.dto.EstudioDTO;
+
 import java.util.List;
 
 public class Estudio {
     private Integer codigo;
     private Practica practica;
     private ResultadoPeticion resultadoPeticion;
+
+    public Estudio() {}
+
+    public Estudio(EstudioDTO estudioDTO) {
+        this.codigo = estudioDTO.getCodigo();
+        this.practica = new Practica(estudioDTO.getPractica());
+        this.resultadoPeticion = new ResultadoPeticion(estudioDTO.getResultadoPeticion());
+    }
 
     public Integer getCodigo() {
         return codigo;

@@ -3,6 +3,7 @@ package controller;
 import model.GrupoPractica;
 import model.Paciente;
 import model.Practica;
+import model.dto.GrupoPracticaDTO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +15,14 @@ public class PracticaController {
     public Practica altaPractica(
             Long codigo,
             String nombre,
-            GrupoPractica grupo,
+            GrupoPracticaDTO grupo,
             Long valorCriticoMin,
             Long valorCriticoMax,
             Boolean valorReservado,
             Integer cantHorasResultado,
             Boolean activa) {
 
-        Practica practica = new Practica(codigo,nombre,grupo,valorCriticoMin,valorCriticoMax,valorReservado,cantHorasResultado,activa);
+        Practica practica = new Practica(codigo,nombre, new GrupoPractica(grupo),valorCriticoMin,valorCriticoMax,valorReservado,cantHorasResultado,activa);
         practicaDB.put(codigo, practica);
         return practica;
     }
@@ -29,7 +30,7 @@ public class PracticaController {
     public void modificacionPractica(
             Long codigo,
             String nombre,
-            GrupoPractica grupo,
+            GrupoPracticaDTO grupo,
             Long valorCriticoMin,
             Long valorCriticoMax,
             Boolean valorReservado,
@@ -39,7 +40,7 @@ public class PracticaController {
 
         Practica practica = practicaDB.get(codigo);
         practica.setNombre(nombre);
-        practica.setGrupo(grupo);
+        practica.setGrupo(new GrupoPractica(grupo));
         practica.setValorCriticoMin(valorCriticoMin);
         practica.setValorCriticoMax(valorCriticoMax);
         practica.setValorReservado(valorReservado);

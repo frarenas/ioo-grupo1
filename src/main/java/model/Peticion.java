@@ -1,8 +1,11 @@
 package model;
 
+import model.dto.PeticionDTO;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Peticion {
     private Long id;
@@ -21,6 +24,16 @@ public class Peticion {
         this.estudios = estudios;
         this.fechaEntrega = fechaEntrega;
         this.sucursal = sucursal;
+    }
+
+    public Peticion(PeticionDTO peticionDTO) {
+        this.id = peticionDTO.getId();
+        this.paciente = new Paciente(peticionDTO.getPaciente());
+        this.obraSocial = peticionDTO.getObraSocial();
+        this.fechaCarga = peticionDTO.getFechaCarga();
+        this.estudios = peticionDTO.getEstudios().stream().map(Estudio::new).collect(Collectors.toList());
+        this.fechaEntrega = peticionDTO.getFechaEntrega();
+        this.sucursal = new Sucursal(peticionDTO.getSucursal());
     }
 
     public Long getId() {

@@ -1,5 +1,7 @@
 package model;
 
+import model.dto.PracticaDTO;
+
 public class Practica {
     private Long codigo;
     private String nombre;
@@ -19,6 +21,17 @@ public class Practica {
         this.valorReservado = valorReservado;
         this.cantHorasResultado = cantHorasResultado;
         this.activa = activa;
+    }
+
+    public Practica(PracticaDTO practicaDTO) {
+        this.codigo = practicaDTO.getCodigo();
+        this.nombre = practicaDTO.getNombre();
+        this.grupo = new GrupoPractica(practicaDTO.getGrupo());
+        this.valorCriticoMin = practicaDTO.getValorCriticoMin();
+        this.valorCriticoMax = practicaDTO.getValorCriticoMax();
+        this.valorReservado = practicaDTO.getValorReservado();
+        this.cantHorasResultado = practicaDTO.getCantHorasResultado();
+        this.activa = practicaDTO.getActiva();
     }
 
     public Long getCodigo() {

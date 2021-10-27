@@ -4,10 +4,13 @@ import model.Estudio;
 import model.Paciente;
 import model.Peticion;
 import model.Sucursal;
+import model.dto.EstudioDTO;
+import model.dto.PacienteDTO;
 import model.dto.PeticionDTO;
 import model.dto.SucursalDTO;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PeticionController {
 
@@ -15,33 +18,36 @@ public class PeticionController {
 
     public void altaPeticion(
             Long id,
-            Paciente paciente,
+            PacienteDTO paciente,
             String obraSocial,
             Date fechaCarga,
-            List<Estudio> estudios,
+            List<EstudioDTO> estudioDtos,
             Date fechaEntrega,
-            Sucursal sucursal
+            SucursalDTO sucursal
     ) {
-        Peticion peticion = new Peticion(id, paciente, obraSocial, fechaCarga, estudios, fechaEntrega, sucursal);
+        List<Estudio> estudios = estudioDtos.stream().map(Estudio::new).collect(Collectors.toList());
+        Peticion peticion = new Peticion(id, new Paciente(paciente), obraSocial, fechaCarga, estudios, fechaEntrega, new Sucursal(sucursal));
         peticionDB.put(id, peticion);
     }
 
     public void modificarPeticion(
             Long id,
-            Paciente paciente,
+            PacienteDTO paciente,
             String obraSocial,
             Date fechaCarga,
-            List<Estudio> estudios,
+            List<EstudioDTO> estudioDtos,
             Date fechaEntrega,
-            Sucursal sucursal
+            SucursalDTO sucursal
     ) {
+        List<Estudio> estudios = estudioDtos.stream().map(Estudio::new).collect(Collectors.toList());
+
         Peticion peticion = peticionDB.get(id);
-        peticion.setPaciente(paciente);
+        peticion.setPaciente(new Paciente(paciente));
         peticion.setObraSocial(obraSocial);
         peticion.setFechaCarga(fechaCarga);
         peticion.setEstudios(estudios);
         peticion.setFechaEntrega(fechaEntrega);
-        peticion.setSucursal(sucursal);
+        peticion.setSucursal(new Sucursal(sucursal));
         peticionDB.put(id, peticion);
     }
 

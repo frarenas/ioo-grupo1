@@ -5,6 +5,7 @@ import model.Usuario;
 import model.dto.EstudioDTO;
 import model.dto.PeticionDTO;
 import model.dto.SucursalDTO;
+import model.dto.UsuarioDTO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,21 +18,21 @@ public class SucursalController {
     public void altaSucursal(
             long numero,
             String direccion,
-            Usuario responsableTecnico
+            UsuarioDTO responsableTecnico
     ) {
-        Sucursal sucursal = new Sucursal(numero, direccion, responsableTecnico);
+        Sucursal sucursal = new Sucursal(numero, direccion, new Usuario(responsableTecnico));
         sucursalDB.put(numero, sucursal);
     }
 
     public void modificarSucursal(
             long numero,
             String direccion,
-            Usuario responsableTecnico
+            UsuarioDTO responsableTecnico
     ) {
         Sucursal sucursal = sucursalDB.get(numero);
         sucursal.setNumero(numero);
         sucursal.setDireccion(direccion);
-        sucursal.setResponsableTecnico(responsableTecnico);
+        sucursal.setResponsableTecnico(new Usuario(responsableTecnico));
 
         sucursalDB.put(numero, sucursal);
     }
