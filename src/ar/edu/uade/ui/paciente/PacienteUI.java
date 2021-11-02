@@ -1,9 +1,9 @@
 package ar.edu.uade.ui.paciente;
 
+import ar.edu.uade.model.dto.PacienteDTO;
 import ar.edu.uade.util.JTableButtonMouseListener;
 import ar.edu.uade.util.JTableButtonRenderer;
 import ar.edu.uade.controller.PacienteController;
-import ar.edu.uade.model.Paciente;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -18,7 +18,7 @@ public class PacienteUI {
     public PacienteUI() {
 
         //Datos tabla
-        List<Paciente> pacientes = new ArrayList<>(PacienteController.pacienteDB.values());
+        List<PacienteDTO> pacientes = PacienteDTO.fromEntities(new ArrayList<>(PacienteController.pacienteDB.values()));
         PacienteTableModel pacienteTableModel = new PacienteTableModel(pacientes);
         tblPacientes.setModel(pacienteTableModel);
 

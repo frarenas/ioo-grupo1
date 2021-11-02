@@ -1,6 +1,6 @@
 package ar.edu.uade.ui.paciente;
 
-import ar.edu.uade.model.Paciente;
+import ar.edu.uade.model.dto.PacienteDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ public class EditarPacienteUI extends JDialog {
 
     private EditarPacienteUI self;
 
-    public EditarPacienteUI(Window owner, Paciente paciente) {
+    public EditarPacienteUI(Window owner, PacienteDTO paciente) {
         super(owner, paciente == null? "Nuevo Paciente" : "Editar Paciente");
 
         self = this;

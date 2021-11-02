@@ -2,7 +2,7 @@ package ar.edu.uade.ui.paciente;
 
 import ar.edu.uade.controller.PacienteController;
 import ar.edu.uade.model.Paciente;
-import ar.edu.uade.ui.Login;
+import ar.edu.uade.model.dto.PacienteDTO;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -10,11 +10,11 @@ import java.util.List;
 
 public class PacienteTableModel extends AbstractTableModel {
 
-    private final List<Paciente> pacientes;
+    private final List<PacienteDTO> pacientes;
     protected String[] columnNames = new String[] { "Nombre", "DNI", "Email", "Editar", "Eliminar" };
     protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, JButton.class, JButton.class};
 
-    public PacienteTableModel(List<Paciente> pacientes) {
+    public PacienteTableModel(List<PacienteDTO> pacientes) {
         this.pacientes = pacientes;
     }
 

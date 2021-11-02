@@ -10,8 +10,6 @@ public class Menu {
     private JPanel pnlPrincipal;
 
 
-    private JButton button1;
-
     public Menu() {
         rootFrame = new JFrame("Clínica");
         JMenuBar mb = setMenu();
