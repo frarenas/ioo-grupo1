@@ -55,9 +55,9 @@ public class PacienteTableModel extends AbstractTableModel {
                     JOptionPane.getFrameForComponent(button),
                     pacientes.get(rowIndex)
             );
-            PacienteDTO paciente = editarPacienteUI.showDialog();
-            if (paciente != null){
-                pacientes.set(rowIndex, paciente);
+            PacienteDTO pacienteGuardado = editarPacienteUI.showDialog();
+            if (pacienteGuardado != null){
+                pacientes.set(rowIndex, pacienteGuardado);
                 fireTableDataChanged();
             }
         });
