@@ -20,6 +20,8 @@ public class EditarPacienteUI extends JDialog {
 
     private final EditarPacienteUI self;
 
+    private PacienteDTO pacienteGuardado = null;
+
     public EditarPacienteUI(Window owner, PacienteDTO paciente) {
         super(owner, paciente == null? "Nuevo Paciente" : "Editar Paciente");
 
@@ -48,13 +50,20 @@ public class EditarPacienteUI extends JDialog {
         }
 
         btnGuardar.addActionListener(e -> {
+            //setVisible(false);
             guardarPaciente(paciente);
             self.dispose();
         });
 
         btnCancelar.addActionListener(e -> {
+            //setVisible(false);
             self.dispose();
         });
+    }
+
+    public PacienteDTO showDialog() {
+        setVisible(true);
+        return pacienteGuardado;
     }
 
     private void guardarPaciente(PacienteDTO paciente) {
@@ -62,14 +71,14 @@ public class EditarPacienteUI extends JDialog {
         PacienteController pacienteController = new PacienteController();
 
         if(paciente == null){
-            /*paciente = new PacienteDTO(
+            paciente = new PacienteDTO(
                     txtDni.getText(),
                     txtNombre.getText(),
                     txtDomicilio.getText(),
                     txtEmail.getText(),
                     (Sexo) cbSexo.getSelectedItem(),
                     Integer.valueOf(txtEdad.getText())
-            );*/
+            );
 
             pacienteController.altaPaciente(
                     txtDni.getText(),
@@ -80,11 +89,11 @@ public class EditarPacienteUI extends JDialog {
                     Integer.valueOf(txtEdad.getText())
             );
         }else {
-            /*paciente.setNombre(txtNombre.getText());
+            paciente.setNombre(txtNombre.getText());
             paciente.setDomicilio(txtDomicilio.getText());
             paciente.setEmail(txtEmail.getText());
             paciente.setSexo((Sexo) cbSexo.getSelectedItem());
-            paciente.setEdad(Integer.valueOf(txtEdad.getText()));*/
+            paciente.setEdad(Integer.valueOf(txtEdad.getText()));
 
             pacienteController.modificarPaciente(
                     txtDni.getText(),
@@ -95,5 +104,6 @@ public class EditarPacienteUI extends JDialog {
                     Integer.valueOf(txtEdad.getText())
             );
         }
+        pacienteGuardado = paciente;
     }
 }

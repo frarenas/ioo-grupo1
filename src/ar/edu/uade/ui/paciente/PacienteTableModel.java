@@ -55,7 +55,11 @@ public class PacienteTableModel extends AbstractTableModel {
                     JOptionPane.getFrameForComponent(button),
                     pacientes.get(rowIndex)
             );
-            editarPacienteUI.setVisible(true);
+            PacienteDTO paciente = editarPacienteUI.showDialog();
+            if (paciente != null){
+                pacientes.set(rowIndex, paciente);
+                fireTableDataChanged();
+            }
         });
         return button;
     }
@@ -69,5 +73,10 @@ public class PacienteTableModel extends AbstractTableModel {
             fireTableDataChanged();
         });
         return button;
+    }
+
+    public void actualizarTabla(PacienteDTO paciente){
+        this.pacientes.add(paciente);
+        fireTableDataChanged();
     }
 }
