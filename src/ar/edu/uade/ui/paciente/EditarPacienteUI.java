@@ -1,5 +1,7 @@
 package ar.edu.uade.ui.paciente;
 
+import ar.edu.uade.controller.PacienteController;
+import ar.edu.uade.model.Sexo;
 import ar.edu.uade.model.dto.PacienteDTO;
 
 import javax.swing.*;
@@ -10,13 +12,13 @@ public class EditarPacienteUI extends JDialog {
     private JTextField txtNombre;
     private JTextField txtDomicilio;
     private JTextField txtEmail;
-    private JComboBox cbSexo;
+    private JComboBox<Sexo> cbSexo;
     private JTextField txtEdad;
     private JButton btnCancelar;
     private JButton btnGuardar;
     private JPanel pnlPrincipal;
 
-    private EditarPacienteUI self;
+    private final EditarPacienteUI self;
 
     public EditarPacienteUI(Window owner, PacienteDTO paciente) {
         super(owner, paciente == null? "Nuevo Paciente" : "Editar Paciente");
@@ -31,7 +33,9 @@ public class EditarPacienteUI extends JDialog {
 
         setModal(true);
 
-        setActions();
+        cbSexo.addItem(Sexo.FEMENINO);
+        cbSexo.addItem(Sexo.MASCULINO);
+        cbSexo.addItem(Sexo.OTRO);
 
         if(paciente != null) {
             txtDni.setEnabled(false);
@@ -39,13 +43,57 @@ public class EditarPacienteUI extends JDialog {
             txtNombre.setText(paciente.getNombre());
             txtDomicilio.setText(paciente.getDomicilio());
             txtEmail.setText(paciente.getEmail());
+            cbSexo.setSelectedItem(paciente.getSexo());
             txtEdad.setText(paciente.getEdad().toString());
         }
-    }
 
-    private void setActions() {
+        btnGuardar.addActionListener(e -> {
+            guardarPaciente(paciente);
+            self.dispose();
+        });
+
         btnCancelar.addActionListener(e -> {
             self.dispose();
         });
+    }
+
+    private void guardarPaciente(PacienteDTO paciente) {
+        //TODO: validar
+        PacienteController pacienteController = new PacienteController();
+
+        if(paciente == null){
+            /*paciente = new PacienteDTO(
+                    txtDni.getText(),
+                    txtNombre.getText(),
+                    txtDomicilio.getText(),
+                    txtEmail.getText(),
+                    (Sexo) cbSexo.getSelectedItem(),
+                    Integer.valueOf(txtEdad.getText())
+            );*/
+
+            pacienteController.altaPaciente(
+                    txtDni.getText(),
+                    txtNombre.getText(),
+                    txtDomicilio.getText(),
+                    txtEmail.getText(),
+                    (Sexo) cbSexo.getSelectedItem(),
+                    Integer.valueOf(txtEdad.getText())
+            );
+        }else {
+            /*paciente.setNombre(txtNombre.getText());
+            paciente.setDomicilio(txtDomicilio.getText());
+            paciente.setEmail(txtEmail.getText());
+            paciente.setSexo((Sexo) cbSexo.getSelectedItem());
+            paciente.setEdad(Integer.valueOf(txtEdad.getText()));*/
+
+            pacienteController.modificarPaciente(
+                    txtDni.getText(),
+                    txtNombre.getText(),
+                    txtDomicilio.getText(),
+                    txtEmail.getText(),
+                    (Sexo) cbSexo.getSelectedItem(),
+                    Integer.valueOf(txtEdad.getText())
+            );
+        }
     }
 }
