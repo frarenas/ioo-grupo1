@@ -1,6 +1,7 @@
 package ar.edu.uade.ui;
 
 import ar.edu.uade.ui.paciente.PacienteUI;
+import ar.edu.uade.ui.usuario.UsuarioUI;
 
 import javax.swing.*;
 
@@ -34,11 +35,14 @@ public class Menu {
         JMenu mnuConsultas = new JMenu("Consultas");
         JMenuItem mnuPacientes = new JMenuItem("Pacientes");
         JMenuItem mnuSucursales = new JMenuItem("Sucursales");
+        JMenuItem mnuUsuarios = new JMenuItem("Usuarios");
 
         mnuPacientes.addActionListener(e -> mostrarPantalla(new PacienteUI().pnlPrincipal));
+        mnuUsuarios.addActionListener(e -> mostrarPantalla(new UsuarioUI().pnlPrincipal));
 
         mnuAbm.add(mnuPacientes);
         mnuAbm.add(mnuSucursales);
+        mnuAbm.add(mnuUsuarios);
         mb.add(mnuAbm);
         mb.add(mnuConsultas);
 
