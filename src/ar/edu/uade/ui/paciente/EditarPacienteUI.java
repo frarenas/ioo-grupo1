@@ -68,7 +68,7 @@ public class EditarPacienteUI extends JDialog {
 
     private void guardarPaciente(PacienteDTO paciente) {
         //TODO: validar
-        PacienteController pacienteController = new PacienteController();
+        PacienteController pacienteController = PacienteController.getInstance();
 
         if(paciente == null){
             paciente = new PacienteDTO(
