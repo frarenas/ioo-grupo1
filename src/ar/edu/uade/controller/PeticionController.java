@@ -15,6 +15,17 @@ import java.util.stream.Collectors;
 public class PeticionController {
 
     public static Map<Long, Peticion> peticionDB = new HashMap<>();
+    private static PeticionController instance;
+
+    private PeticionController() {
+    }
+
+    public static PeticionController getInstance() {
+        if (instance == null) {
+            instance = new PeticionController();
+        }
+        return instance;
+    }
 
     public void altaPeticion(
             Long id,

@@ -1,7 +1,6 @@
 package ar.edu.uade.controller;
 
 import ar.edu.uade.model.GrupoPractica;
-import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.Practica;
 import ar.edu.uade.model.dto.GrupoPracticaDTO;
 
@@ -11,6 +10,17 @@ import java.util.Map;
 public class PracticaController {
 
     public static Map<Long, Practica> practicaDB = new HashMap<>();
+    private static PracticaController instance;
+
+    private PracticaController() {
+    }
+
+    public static PracticaController getInstance() {
+        if (instance == null) {
+            instance = new PracticaController();
+        }
+        return instance;
+    }
 
     public Practica altaPractica(
             Long codigo,

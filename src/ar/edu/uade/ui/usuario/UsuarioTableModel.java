@@ -79,7 +79,7 @@ public class UsuarioTableModel extends AbstractTableModel {
     private JButton setBotonEliminar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            UsuarioController usuarioController = new UsuarioController();
+            UsuarioController usuarioController = UsuarioController.getInstance();
             usuarioController.bajaUsuario(usuarios.get(rowIndex).getDni());
             usuarios.remove(rowIndex);
             fireTableDataChanged();
