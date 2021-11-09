@@ -1,6 +1,7 @@
 package ar.edu.uade.ui;
 
 import ar.edu.uade.ui.paciente.PacienteUI;
+import ar.edu.uade.ui.sucursal.SucursalUI;
 
 import javax.swing.*;
 
@@ -36,6 +37,7 @@ public class Menu {
         JMenuItem mnuSucursales = new JMenuItem("Sucursales");
 
         mnuPacientes.addActionListener(e -> mostrarPantalla(new PacienteUI().pnlPrincipal));
+        mnuSucursales.addActionListener(e -> mostrarPantalla(new SucursalUI().pnlPrincipal));
 
         mnuAbm.add(mnuPacientes);
         mnuAbm.add(mnuSucursales);
