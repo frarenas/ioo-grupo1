@@ -78,7 +78,7 @@ public class EditarUsuarioUI extends JDialog {
     private void guardarUsuario(UsuarioDTO usuarioDTO){
         //TODO: validar
         try {
-            UsuarioController usuarioController = new UsuarioController();
+            UsuarioController usuarioController = UsuarioController.getInstance();
 
             usuarioController.altaUsuario(
                     txtNombreUsuario.getText(),

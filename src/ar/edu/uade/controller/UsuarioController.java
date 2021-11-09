@@ -10,6 +10,17 @@ import java.util.Map;
 public class UsuarioController {
 
     public static Map<String, Usuario> usuarioDB = new HashMap<>();
+    private static UsuarioController instance;
+
+    private UsuarioController() {
+    }
+
+    public static UsuarioController getInstance() {
+        if (instance == null) {
+            instance = new UsuarioController();
+        }
+        return instance;
+    }
 
     public void altaUsuario(
             String nombreUsuario,
@@ -19,9 +30,8 @@ public class UsuarioController {
             String domicilio,
             String dni,
             Date fechaNacimiento,
-            Rol rol
-    ) {
-        Usuario usuario = new Usuario(nombreUsuario,email,contrasena,nombre,domicilio,dni, fechaNacimiento, rol);
+            Rol rol) {
+        Usuario usuario = new Usuario(nombreUsuario, email, contrasena, nombre, domicilio, dni, fechaNacimiento, rol);
         usuarioDB.put(dni, usuario);
     }
 

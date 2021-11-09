@@ -14,6 +14,17 @@ import java.util.Map;
 public class SucursalController {
 
     public static Map<Long, Sucursal> sucursalDB = new HashMap<>();
+    private static SucursalController instance;
+
+    private SucursalController() {
+    }
+
+    public static SucursalController getInstance() {
+        if (instance == null) {
+            instance = new SucursalController();
+        }
+        return instance;
+    }
 
     public void altaSucursal(
             long numero,
@@ -38,7 +49,7 @@ public class SucursalController {
     }
 
     public String bajaSucursal(long numero, SucursalDTO sucursalDestino) {
-        PeticionController peticionController = new PeticionController();
+        PeticionController peticionController = PeticionController.getInstance();
         Boolean peticionesFinalizadas = false;
 
         List<PeticionDTO> peticionDTOS = peticionController.buscarPeticionesPorSucursal(numero);

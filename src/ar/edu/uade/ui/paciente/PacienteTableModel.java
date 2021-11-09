@@ -63,7 +63,7 @@ public class PacienteTableModel extends AbstractTableModel {
     private JButton setBotonEliminar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            PacienteController pacienteController = new PacienteController();
+            PacienteController pacienteController = PacienteController.getInstance();
             pacienteController.bajaPaciente(pacientes.get(rowIndex).getDni());
             pacientes.remove(rowIndex);
             fireTableDataChanged();
