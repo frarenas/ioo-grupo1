@@ -12,7 +12,7 @@ public class Menu {
 
 
     public Menu() {
-        rootFrame = new JFrame("Clínica");
+        rootFrame = new JFrame("Laboratorio");
         JMenuBar mb = setMenu();
 
         rootFrame.setJMenuBar(mb);
