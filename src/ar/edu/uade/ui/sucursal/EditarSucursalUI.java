@@ -8,6 +8,7 @@ import ar.edu.uade.model.dto.UsuarioDTO;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class EditarSucursalUI extends JDialog {
     private JPanel pnlPrincipal;
@@ -60,35 +61,55 @@ public class EditarSucursalUI extends JDialog {
         });
 
         btnGuardar.addActionListener(e -> {
-            //TODO: Validar datos
             SucursalController sucursalController = SucursalController.getInstance();
             UsuarioController usuarioController = UsuarioController.getInstance();
             UsuarioDTO responsableTecnico = usuarioController.buscarUsuario(cbResponsableTecnico.getSelectedItem().toString().split(": ")[1]);
 
-            if(sucursalGuardada == null) {
-                sucursalGuardada = new SucursalDTO(
-                        Long.valueOf(txtNumero.getText()),
-                        txtDireccion.getText(),
-                        usuarioController.buscarUsuario(responsableTecnico.getDni())
-                );
 
-                sucursalController.altaSucursal(
-                        Long.valueOf(txtNumero.getText()),
-                        txtDireccion.getText(),
-                        usuarioController.buscarUsuario(responsableTecnico.getDni())
-                );
+            //long valor = ;
+            //TODO: Validar datos
+            if(txtNumero.getText().length() > 0) {
+                if(sucursalController.buscarSucursal(Long.valueOf(txtNumero.getText())) != null) {
+                    if(txtDireccion.getText().length() > 0) {
+                        if(sucursalGuardada == null) {
+                            sucursalGuardada = new SucursalDTO(
+                                    Long.valueOf(txtNumero.getText()),
+                                    txtDireccion.getText(),
+                                    usuarioController.buscarUsuario(responsableTecnico.getDni())
+                            );
+
+                            sucursalController.altaSucursal(
+                                    Long.valueOf(txtNumero.getText()),
+                                    txtDireccion.getText(),
+                                    usuarioController.buscarUsuario(responsableTecnico.getDni())
+                            );
+                        }
+                        else {
+                            sucursalGuardada.setDireccion(txtDireccion.getText());
+                            sucursalGuardada.setResponsableTecnico(responsableTecnico);
+
+                            sucursalController.modificarSucursal(
+                                    Long.valueOf(txtNumero.getText()),
+                                    txtDireccion.getText(),
+                                    usuarioController.buscarUsuario(responsableTecnico.getDni())
+                            );
+                        }
+                        self.dispose();
+                    }
+                    else {
+                        //No ingresó nada en el campo de dirección.
+                        showMessageDialog(null, "No pudimos reconocer la dirección ingresada.");
+                    }
+                }
+                else {
+                    //El número de sucursal ingresado ya está usado por otra sucursal.
+                    showMessageDialog(null, "El número de sucursal ingresado le pertenece a otra sucursal.");
+                }
             }
             else {
-                sucursalGuardada.setDireccion(txtDireccion.getText());
-                sucursalGuardada.setResponsableTecnico(responsableTecnico);
-
-                sucursalController.modificarSucursal(
-                        Long.valueOf(txtNumero.getText()),
-                        txtDireccion.getText(),
-                        usuarioController.buscarUsuario(responsableTecnico.getDni())
-                );
+                //No ingresó un número de sucursal.
+                showMessageDialog(null, "No pudimos reconocer el número de sucursal.");
             }
-            self.dispose();
         });
     }
 

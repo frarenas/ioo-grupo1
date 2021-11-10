@@ -43,6 +43,7 @@ public class SeleccionarSucursalUI extends JDialog {
             }
         }
     }
+
     private void setActions() {
         btnCancelar.addActionListener(e -> {
             self.dispose();
