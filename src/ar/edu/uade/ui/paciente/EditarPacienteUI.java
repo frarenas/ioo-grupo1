@@ -19,13 +19,15 @@ public class EditarPacienteUI extends JDialog {
     private JPanel pnlPrincipal;
 
     private final EditarPacienteUI self;
+    private final PacienteController pacienteController;
 
     private PacienteDTO pacienteGuardado = null;
 
-    public EditarPacienteUI(Window owner, PacienteDTO paciente) {
+    public EditarPacienteUI(Window owner, PacienteController pacienteController, PacienteDTO paciente) {
         super(owner, paciente == null? "Nuevo Paciente" : "Editar Paciente");
 
         self = this;
+        this.pacienteController = pacienteController;
 
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -68,7 +70,6 @@ public class EditarPacienteUI extends JDialog {
 
     private void guardarPaciente(PacienteDTO paciente) {
         //TODO: validar
-        PacienteController pacienteController = PacienteController.getInstance();
 
         if(paciente == null){
             paciente = new PacienteDTO(
@@ -80,14 +81,7 @@ public class EditarPacienteUI extends JDialog {
                     Integer.valueOf(txtEdad.getText())
             );
 
-            pacienteController.altaPaciente(
-                    txtDni.getText(),
-                    txtNombre.getText(),
-                    txtDomicilio.getText(),
-                    txtEmail.getText(),
-                    (Sexo) cbSexo.getSelectedItem(),
-                    Integer.valueOf(txtEdad.getText())
-            );
+            pacienteController.altaPaciente(paciente);
         }else {
             paciente.setNombre(txtNombre.getText());
             paciente.setDomicilio(txtDomicilio.getText());
@@ -95,14 +89,7 @@ public class EditarPacienteUI extends JDialog {
             paciente.setSexo((Sexo) cbSexo.getSelectedItem());
             paciente.setEdad(Integer.valueOf(txtEdad.getText()));
 
-            pacienteController.modificarPaciente(
-                    txtDni.getText(),
-                    txtNombre.getText(),
-                    txtDomicilio.getText(),
-                    txtEmail.getText(),
-                    (Sexo) cbSexo.getSelectedItem(),
-                    Integer.valueOf(txtEdad.getText())
-            );
+            pacienteController.modificarPaciente(paciente);
         }
         pacienteGuardado = paciente;
     }

@@ -15,11 +15,11 @@ public class PacienteUI {
     private JTable tblPacientes;
     private JButton btnAgregar;
 
-    public PacienteUI() {
+    public PacienteUI(PacienteController pacienteController) {
 
         //Datos tabla
-        List<PacienteDTO> pacientes = PacienteDTO.fromEntities(new ArrayList<>(PacienteController.pacienteDB.values()));
-        PacienteTableModel pacienteTableModel = new PacienteTableModel(pacientes);
+        List<PacienteDTO> pacientes = pacienteController.getPacientes();
+        PacienteTableModel pacienteTableModel = new PacienteTableModel(pacienteController, pacientes);
         tblPacientes.setModel(pacienteTableModel);
 
         //Botones tabla
@@ -32,6 +32,7 @@ public class PacienteUI {
         btnAgregar.addActionListener(e -> {
             EditarPacienteUI editarPacienteUI = new EditarPacienteUI(
                     JOptionPane.getFrameForComponent(pnlPrincipal),
+                    pacienteController,
                     null
             );
             PacienteDTO pacienteGuardado = editarPacienteUI.showDialog();

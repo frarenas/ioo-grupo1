@@ -21,7 +21,7 @@ public class EditarUsuarioUI extends JDialog {
     private JTextField txtDomicilio;
     private JTextField txtDNI;
     private JTextField txtFechaNacimiento;
-    private JComboBox txtRol;
+    private JComboBox<Rol> txtRol;
 
     private JButton btnCancelar;
     private JButton btnGuardar;
