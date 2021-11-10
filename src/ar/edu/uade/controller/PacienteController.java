@@ -1,6 +1,5 @@
 package ar.edu.uade.controller;
 
-import ar.edu.uade.model.Estudio;
 import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.Sexo;
 import ar.edu.uade.model.dto.EstudioDTO;
@@ -13,6 +12,17 @@ import java.util.Map;
 public class PacienteController {
 
     public static Map<String, Paciente> pacienteDB = new HashMap<>();
+    private static PacienteController instance;
+
+    private PacienteController() {
+    }
+
+    public static PacienteController getInstance() {
+        if (instance == null) {
+            instance = new PacienteController();
+        }
+        return instance;
+    }
 
     public void altaPaciente(
             String dni,
@@ -48,7 +58,7 @@ public class PacienteController {
     public String bajaPaciente(
             String dni
     ) {
-        PeticionController peticionController = new PeticionController();
+        PeticionController peticionController = PeticionController.getInstance();
         Boolean peticionesFinalizadas = false;
 
         for (PeticionDTO peticionDTO: peticionController.buscarPeticionesDelPaciente(dni)) {

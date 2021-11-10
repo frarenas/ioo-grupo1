@@ -50,7 +50,7 @@ public class SucursalController {
     }
 
     public String bajaSucursal(long numero, SucursalDTO sucursalDestino) {
-        PeticionController peticionController = new PeticionController();
+        PeticionController peticionController = PeticionController.getInstance();
         Boolean peticionesFinalizadas = false;
 
         List<PeticionDTO> peticionDTOS = peticionController.buscarPeticionesPorSucursal(numero);

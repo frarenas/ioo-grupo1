@@ -34,8 +34,10 @@ public class PacienteUI {
                     JOptionPane.getFrameForComponent(pnlPrincipal),
                     null
             );
-            editarPacienteUI.setVisible(true);
+            PacienteDTO pacienteGuardado = editarPacienteUI.showDialog();
+            if (pacienteGuardado != null){
+                pacienteTableModel.actualizarTabla(pacienteGuardado);
+            }
         });
     }
-
 }

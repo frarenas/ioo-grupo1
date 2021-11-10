@@ -29,9 +29,8 @@ public class UsuarioController {
             String domicilio,
             String dni,
             Date fechaNacimiento,
-            Rol rol
-    ) {
-        Usuario usuario = new Usuario(nombreUsuario,email,contrasena,nombre,domicilio,dni, fechaNacimiento, rol);
+            Rol rol) {
+        Usuario usuario = new Usuario(nombreUsuario, email, contrasena, nombre, domicilio, dni, fechaNacimiento, rol);
         usuarioDB.put(dni, usuario);
     }
 
