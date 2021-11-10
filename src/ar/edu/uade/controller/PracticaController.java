@@ -3,7 +3,6 @@ package ar.edu.uade.controller;
 import ar.edu.uade.model.GrupoPractica;
 import ar.edu.uade.model.Practica;
 import ar.edu.uade.model.dto.GrupoPracticaDTO;
-import ar.edu.uade.model.dto.PacienteDTO;
 import ar.edu.uade.model.dto.PracticaDTO;
 
 import java.util.ArrayList;

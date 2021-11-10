@@ -6,7 +6,9 @@ import ar.edu.uade.model.dto.EstudioDTO;
 import ar.edu.uade.model.dto.PacienteDTO;
 import ar.edu.uade.model.dto.PeticionDTO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PacienteController {
@@ -36,6 +38,19 @@ public class PacienteController {
         pacienteDB.put(dni, paciente);
     }
 
+    public void altaPaciente(
+            PacienteDTO paciente
+    ) {
+        altaPaciente(
+                paciente.getDni(),
+                paciente.getNombre(),
+                paciente.getDomicilio(),
+                paciente.getEmail(),
+                paciente.getSexo(),
+                paciente.getEdad()
+        );
+    }
+
     public void modificarPaciente(
             String dni,
             String nombre,
@@ -55,11 +70,24 @@ public class PacienteController {
         pacienteDB.put(dni, paciente);
     }
 
+    public void modificarPaciente(
+            PacienteDTO paciente
+    ) {
+        modificarPaciente(
+                paciente.getDni(),
+                paciente.getNombre(),
+                paciente.getDomicilio(),
+                paciente.getEmail(),
+                paciente.getSexo(),
+                paciente.getEdad()
+        );
+    }
+
     public String bajaPaciente(
             String dni
     ) {
         PeticionController peticionController = PeticionController.getInstance();
-        Boolean peticionesFinalizadas = false;
+        boolean peticionesFinalizadas = false;
 
         for (PeticionDTO peticionDTO: peticionController.buscarPeticionesDelPaciente(dni)) {
 
@@ -88,5 +116,9 @@ public class PacienteController {
     ) {
         Paciente paciente = pacienteDB.get(dni);
         return PacienteDTO.fromEntity(paciente);
+    }
+
+    public List<PacienteDTO> getPacientes() {
+        return PacienteDTO.fromEntities(new ArrayList<>(pacienteDB.values()));
     }
 }

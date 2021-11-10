@@ -1,7 +1,6 @@
 package ar.edu.uade.ui.paciente;
 
 import ar.edu.uade.controller.PacienteController;
-import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.dto.PacienteDTO;
 
 import javax.swing.*;
@@ -10,11 +9,14 @@ import java.util.List;
 
 public class PacienteTableModel extends AbstractTableModel {
 
+    private final PacienteController pacienteController;
+
     private final List<PacienteDTO> pacientes;
     protected String[] columnNames = new String[] { "Nombre", "DNI", "Email", "Editar", "Eliminar" };
     protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, JButton.class, JButton.class};
 
-    public PacienteTableModel(List<PacienteDTO> pacientes) {
+    public PacienteTableModel(PacienteController pacienteController, List<PacienteDTO> pacientes) {
+        this.pacienteController = pacienteController;
         this.pacientes = pacientes;
     }
 
@@ -53,6 +55,7 @@ public class PacienteTableModel extends AbstractTableModel {
         button.addActionListener(e -> {
             EditarPacienteUI editarPacienteUI = new EditarPacienteUI(
                     JOptionPane.getFrameForComponent(button),
+                    pacienteController,
                     pacientes.get(rowIndex)
             );
             PacienteDTO pacienteGuardado = editarPacienteUI.showDialog();
@@ -67,7 +70,6 @@ public class PacienteTableModel extends AbstractTableModel {
     private JButton setBotonEliminar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            PacienteController pacienteController = PacienteController.getInstance();
             pacienteController.bajaPaciente(pacientes.get(rowIndex).getDni());
             pacientes.remove(rowIndex);
             fireTableDataChanged();
