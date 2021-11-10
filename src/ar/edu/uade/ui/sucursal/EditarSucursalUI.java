@@ -1,14 +1,18 @@
 package ar.edu.uade.ui.sucursal;
 
+import ar.edu.uade.controller.SucursalController;
+import ar.edu.uade.controller.UsuarioController;
 import ar.edu.uade.model.dto.SucursalDTO;
+import ar.edu.uade.model.dto.UsuarioDTO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class EditarSucursalUI extends JDialog {
     private JPanel pnlPrincipal;
     private JButton btnCancelar;
-    private JButton guardarButton;
+    private JButton btnGuardar;
     private JTextField txtDireccion;
     private JComboBox cbResponsableTecnico;
     private JTextField txtNumero;
@@ -21,6 +25,7 @@ public class EditarSucursalUI extends JDialog {
 
     public EditarSucursalUI(Window owner, SucursalDTO sucursal) {
         super(owner, sucursal == null? "Nueva Sucursal" : "Editar Sucursal");
+        UsuarioController usuarioController = UsuarioController.getInstance();
 
         self = this;
 
@@ -35,16 +40,54 @@ public class EditarSucursalUI extends JDialog {
         //Añade los eventos de los botones
         setActions();
 
+        List<UsuarioDTO> usuarios = usuarioController.listarUsuarios();
+        for(UsuarioDTO usuario: usuarios) {
+            cbResponsableTecnico.addItem(usuario.getNombre() + " DNI: " + usuario.getDni());
+        }
+
         if(sucursal != null) {
             txtNumero.setEnabled(false);
             txtNumero.setText(sucursal.getNumero().toString());
             txtDireccion.setText(sucursal.getDireccion());
-            cbResponsableTecnico.setSelectedItem(sucursal.getResponsableTecnico().getNombre());
+            cbResponsableTecnico.setSelectedItem(sucursal.getResponsableTecnico().getNombre() + " DNI: " + sucursal.getResponsableTecnico().getDni());
+            sucursalGuardada = sucursal;
         }
     }
 
     private void setActions() {
         btnCancelar.addActionListener(e -> {
+            self.dispose();
+        });
+
+        btnGuardar.addActionListener(e -> {
+            //TODO: Validar datos
+            SucursalController sucursalController = SucursalController.getInstance();
+            UsuarioController usuarioController = UsuarioController.getInstance();
+            UsuarioDTO responsableTecnico = usuarioController.buscarUsuario(cbResponsableTecnico.getSelectedItem().toString().split(": ")[1]);
+
+            if(sucursalGuardada == null) {
+                sucursalGuardada = new SucursalDTO(
+                        Long.valueOf(txtNumero.getText()),
+                        txtDireccion.getText(),
+                        usuarioController.buscarUsuario(responsableTecnico.getDni())
+                );
+
+                sucursalController.altaSucursal(
+                        Long.valueOf(txtNumero.getText()),
+                        txtDireccion.getText(),
+                        usuarioController.buscarUsuario(responsableTecnico.getDni())
+                );
+            }
+            else {
+                sucursalGuardada.setDireccion(txtDireccion.getText());
+                sucursalGuardada.setResponsableTecnico(responsableTecnico);
+
+                sucursalController.modificarSucursal(
+                        Long.valueOf(txtNumero.getText()),
+                        txtDireccion.getText(),
+                        usuarioController.buscarUsuario(responsableTecnico.getDni())
+                );
+            }
             self.dispose();
         });
     }

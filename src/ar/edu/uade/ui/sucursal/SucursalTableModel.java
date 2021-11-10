@@ -2,6 +2,8 @@ package ar.edu.uade.ui.sucursal;
 
 import ar.edu.uade.controller.SucursalController;
 import ar.edu.uade.model.Sucursal;
+import ar.edu.uade.model.dto.SucursalDTO;
+import ar.edu.uade.model.dto.UsuarioDTO;
 
 import javax.swing.*;
 import java.util.List;
@@ -9,11 +11,11 @@ import javax.swing.table.AbstractTableModel;
 
 public class SucursalTableModel extends AbstractTableModel {
 
-    private final List<Sucursal> sucursales;
+    private final List<SucursalDTO> sucursales;
     protected String[] columnNames = new String[] { "Número", "Dirección", "Responsable Técnico", "Editar", "Eliminar" };
     protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, JButton.class, JButton.class};
 
-    public SucursalTableModel(List<Sucursal> sucursales) {
+    public SucursalTableModel(List<SucursalDTO> sucursales) {
         this.sucursales = sucursales;
     }
 
@@ -50,11 +52,15 @@ public class SucursalTableModel extends AbstractTableModel {
     private JButton setBotonEditar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            /*EditarPacienteUI editarPacienteUI = new EditarPacienteUI(
+            EditarSucursalUI editarSucursalUI = new EditarSucursalUI(
                     JOptionPane.getFrameForComponent(button),
-                    pacientes.get(rowIndex)
+                    sucursales.get(rowIndex)
             );
-            editarPacienteUI.setVisible(true);*/
+            SucursalDTO sucursalGuardada = editarSucursalUI.showDialog();
+            if (sucursalGuardada != null){
+                sucursales.set(rowIndex, sucursalGuardada);
+                fireTableDataChanged();
+            }
         });
         return button;
     }
@@ -62,12 +68,25 @@ public class SucursalTableModel extends AbstractTableModel {
     private JButton setBotonEliminar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            //TODO: Está mal que cree una instancia del controller acá. Modificar.
-            SucursalController sucursalController = new SucursalController();
-            //sucursalController.bajaSucursal(sucursales.get(rowIndex).getNumero());
-            sucursales.remove(rowIndex);
-            fireTableDataChanged();
+            SucursalController sucursalController = SucursalController.getInstance();
+
+            SeleccionarSucursalUI seleccionarSucursalUI = new SeleccionarSucursalUI(
+                    JOptionPane.getFrameForComponent(button),
+                    sucursales.get(rowIndex)
+            );
+            SucursalDTO sucursalGuardada = seleccionarSucursalUI.showDialog();
+            if (sucursalGuardada != null){
+                //TODO: Necesito obtener la sucursal a la que le pasaría las órdenes de esta sucursal
+                sucursalController.bajaSucursal(sucursales.get(rowIndex).getNumero(), sucursalGuardada);
+                sucursales.remove(rowIndex);
+                fireTableDataChanged();
+            }
         });
         return button;
+    }
+
+    public void actualizarTabla(SucursalDTO sucursal){
+        this.sucursales.add(sucursal);
+        fireTableDataChanged();
     }
 }

@@ -9,6 +9,17 @@ import java.util.*;
 public class UsuarioController {
 
     public static Map<String, Usuario> usuarioDB = new HashMap<>();
+    private static UsuarioController instance;
+
+    private UsuarioController() {
+    }
+
+    public static UsuarioController getInstance() {
+        if (instance == null) {
+            instance = new UsuarioController();
+        }
+        return instance;
+    }
 
     public void altaUsuario(
             String nombreUsuario,
@@ -54,5 +65,10 @@ public class UsuarioController {
     //TODO: Esto no está en el diagrama de clases. ¿Hay que incluirlo?
     public List<UsuarioDTO> listarUsuarios() {
         return UsuarioDTO.fromEntities(new ArrayList<>(UsuarioController.usuarioDB.values()));
+    }
+
+    public UsuarioDTO buscarUsuario(String dni) {
+        Usuario usuario = usuarioDB.get(dni);
+        return UsuarioDTO.fromEntity(usuario);
     }
 }

@@ -1,5 +1,7 @@
 package ar.edu.uade.ui.sucursal;
 
+import ar.edu.uade.controller.PacienteController;
+import ar.edu.uade.model.dto.PacienteDTO;
 import ar.edu.uade.util.JTableButtonMouseListener;
 import ar.edu.uade.util.JTableButtonRenderer;
 import ar.edu.uade.model.dto.SucursalDTO;
@@ -19,7 +21,7 @@ public class SucursalUI {
     public SucursalUI() {
 
         //Datos tabla
-        List<Sucursal> sucursales = new ArrayList<>(SucursalController.sucursalDB.values());
+        List<SucursalDTO> sucursales = SucursalDTO.fromEntities(new ArrayList<>(SucursalController.sucursalDB.values()));
         SucursalTableModel sucursalTableModel = new SucursalTableModel(sucursales);
         tblSucursales.setModel(sucursalTableModel);
 
@@ -35,7 +37,10 @@ public class SucursalUI {
                     JOptionPane.getFrameForComponent(pnlPrincipal),
                     null
             );
-            editarSucursalUI.setVisible(true);
+            SucursalDTO sucursalGuardada = editarSucursalUI.showDialog();
+            if(sucursalGuardada != null) {
+                sucursalTableModel.actualizarTabla(sucursalGuardada);
+            }
         });
     }
 }
