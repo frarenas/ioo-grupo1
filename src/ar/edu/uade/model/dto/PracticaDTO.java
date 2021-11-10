@@ -1,7 +1,9 @@
 package ar.edu.uade.model.dto;
 
-import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.Practica;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PracticaDTO {
     private Long codigo;
@@ -99,5 +101,9 @@ public class PracticaDTO {
                 practica.getCantHorasResultado(),
                 practica.getActiva()
         );
+    }
+
+    public static List<PracticaDTO> fromEntities(List<Practica> practicas) {
+        return practicas.stream().map(PracticaDTO::fromEntity).collect(Collectors.toList());
     }
 }

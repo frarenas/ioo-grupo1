@@ -39,9 +39,13 @@ public class Main {
         PacienteController.pacienteDB.put(paciente2.getDni(), paciente2);
         PacienteController.pacienteDB.put(paciente3.getDni(), paciente3);
 
-        GrupoPractica grupo1 = new GrupoPractica("Grupo 1");
-        GrupoPractica grupo2 = new GrupoPractica("Grupo 2");
-        GrupoPractica grupo3 = new GrupoPractica("Grupo 3");
+        GrupoPractica grupo1 = new GrupoPractica(1L, "Grupo 1");
+        GrupoPractica grupo2 = new GrupoPractica(2L, "Grupo 2");
+        GrupoPractica grupo3 = new GrupoPractica(3L, "Grupo 3");
+
+        PracticaController.grupoPracticaDB.put(grupo1.getId(), grupo1);
+        PracticaController.grupoPracticaDB.put(grupo2.getId(), grupo2);
+        PracticaController.grupoPracticaDB.put(grupo3.getId(), grupo3);
 
         Practica practica1 = new Practica(1L,"Practica 1", grupo1,10L,100L,false,12,true);
         Practica practica2 = new Practica(2L,"Practica 2", grupo2,20L,200L,true,24,true);
