@@ -1,9 +1,13 @@
 package ar.edu.uade.model.dto;
 
+import ar.edu.uade.controller.UsuarioController;
+import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.Rol;
 import ar.edu.uade.model.Usuario;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UsuarioDTO {
     private String nombreUsuario;
@@ -99,5 +103,9 @@ public class UsuarioDTO {
                 usuario.getDni(),
                 usuario.getFechaNacimiento(),
                 usuario.getRol());
+    }
+
+    public static List<UsuarioDTO> fromEntities(List<Usuario> usuarios) {
+        return usuarios.stream().map(UsuarioDTO::fromEntity).collect(Collectors.toList());
     }
 }

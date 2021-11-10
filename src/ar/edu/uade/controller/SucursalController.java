@@ -7,6 +7,7 @@ import ar.edu.uade.model.dto.PeticionDTO;
 import ar.edu.uade.model.dto.SucursalDTO;
 import ar.edu.uade.model.dto.UsuarioDTO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,11 @@ public class SucursalController {
         }
 
 
+    }
+
+    //TODO: Esto no está en el diagrama de clases. ¿Hay que incluirlo?
+    public List<SucursalDTO> listarSucursales() {
+        return SucursalDTO.fromEntities(new ArrayList<>(SucursalController.sucursalDB.values()));
     }
 
     public SucursalDTO buscarSucursal(long numero) {

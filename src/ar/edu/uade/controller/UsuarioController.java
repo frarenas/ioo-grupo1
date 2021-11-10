@@ -2,10 +2,9 @@ package ar.edu.uade.controller;
 
 import ar.edu.uade.model.Rol;
 import ar.edu.uade.model.Usuario;
+import ar.edu.uade.model.dto.UsuarioDTO;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class UsuarioController {
 
@@ -60,5 +59,15 @@ public class UsuarioController {
 
     public void bajaUsuario(String dni) {
         usuarioDB.remove(dni);
+    }
+
+    //TODO: Esto no está en el diagrama de clases. ¿Hay que incluirlo?
+    public List<UsuarioDTO> listarUsuarios() {
+        return UsuarioDTO.fromEntities(new ArrayList<>(UsuarioController.usuarioDB.values()));
+    }
+
+    public UsuarioDTO buscarUsuario(String dni) {
+        Usuario usuario = usuarioDB.get(dni);
+        return UsuarioDTO.fromEntity(usuario);
     }
 }

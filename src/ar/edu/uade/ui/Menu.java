@@ -2,6 +2,7 @@ package ar.edu.uade.ui;
 
 import ar.edu.uade.controller.PracticaController;
 import ar.edu.uade.ui.paciente.PacienteUI;
+import ar.edu.uade.ui.sucursal.SucursalUI;
 import ar.edu.uade.ui.practica.PracticaUI;
 import ar.edu.uade.ui.usuario.UsuarioUI;
 
@@ -41,6 +42,7 @@ public class Menu {
         JMenuItem mnuPracticas = new JMenuItem("Prácticas");
 
         mnuPacientes.addActionListener(e -> mostrarPantalla(new PacienteUI().pnlPrincipal));
+        mnuSucursales.addActionListener(e -> mostrarPantalla(new SucursalUI().pnlPrincipal));
         mnuUsuarios.addActionListener(e -> mostrarPantalla(new UsuarioUI().pnlPrincipal));
         mnuPracticas.addActionListener(e -> mostrarPantalla(new PracticaUI(PracticaController.getInstance()).pnlPrincipal));
 
