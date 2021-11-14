@@ -1,11 +1,9 @@
 package ar.edu.uade.ui;
 
-import ar.edu.uade.controller.PacienteController;
-import ar.edu.uade.controller.PracticaController;
-import ar.edu.uade.controller.SucursalController;
-import ar.edu.uade.controller.UsuarioController;
+import ar.edu.uade.controller.*;
 import ar.edu.uade.model.*;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Main {
@@ -54,6 +52,22 @@ public class Main {
         PracticaController.practicaDB.put(practica1.getCodigo(), practica1);
         PracticaController.practicaDB.put(practica2.getCodigo(), practica2);
         PracticaController.practicaDB.put(practica3.getCodigo(), practica3);
+
+        ResultadoPeticion resultadoPeticion1 = new ResultadoPeticion(100D);
+        ResultadoPeticion resultadoPeticion2 = new ResultadoPeticion(100D);
+        ResultadoPeticion resultadoPeticion3 = new ResultadoPeticion(100D);
+
+        Estudio estudio1 = new Estudio(1, practica1, resultadoPeticion1);
+        Estudio estudio2 = new Estudio(2, practica2, resultadoPeticion2);
+        Estudio estudio3 = new Estudio(3, practica3, resultadoPeticion3);
+
+        Peticion peticion1 = new Peticion(1L, paciente1, "Obra social 1", new Date(121231331), Arrays.asList(estudio1, estudio2), new Date(121231331), sucursal1);
+        Peticion peticion2 = new Peticion(2L, paciente1, "Obra social 2", new Date(121231331), Arrays.asList(estudio2, estudio3), new Date(121231331), sucursal2);
+        Peticion peticion3 = new Peticion(3L, paciente2, "Obra social 3", new Date(121231331), Arrays.asList(estudio3, estudio1), new Date(121231331), sucursal3);
+
+        PeticionController.peticionDB.put(peticion1.getId(), peticion1);
+        PeticionController.peticionDB.put(peticion2.getId(), peticion2);
+        PeticionController.peticionDB.put(peticion3.getId(), peticion3);
     }
 
 }
