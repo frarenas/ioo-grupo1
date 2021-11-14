@@ -47,7 +47,7 @@ public class Estudio {
         return false;
     }
 
-    public void modificarResultado(Long valor){
+    public void modificarResultado(Double valor){
         if(resultadoPeticion != null)
             resultadoPeticion.setResultado(valor);
     }

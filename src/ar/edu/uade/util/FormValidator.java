@@ -17,7 +17,26 @@ public class FormValidator {
 
     public static boolean validateAge(String text) {
         String regexPattern = "\\d+";
-        return patternMatches(text, regexPattern)
+        return !text.isEmpty()
+                && patternMatches(text, regexPattern)
                 && Integer.parseInt(text) < 130;
+    }
+
+    public static boolean validateNumber(String text) {
+        String regexPattern = "\\d+";
+        return !text.isEmpty()
+                && patternMatches(text, regexPattern);
+    }
+
+    public static boolean validateLong(String text) {
+        if (text.isEmpty()){
+            return false;
+        }
+        try{
+            Double.valueOf(text);
+            return true;
+        }catch (NumberFormatException e){
+            return false;
+        }
     }
 }

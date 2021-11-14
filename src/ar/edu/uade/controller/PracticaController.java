@@ -30,8 +30,8 @@ public class PracticaController {
             Long codigo,
             String nombre,
             GrupoPracticaDTO grupo,
-            Long valorCriticoMin,
-            Long valorCriticoMax,
+            Double valorCriticoMin,
+            Double valorCriticoMax,
             Boolean valorReservado,
             Integer cantHorasResultado,
             Boolean activa) {
@@ -58,8 +58,8 @@ public class PracticaController {
             Long codigo,
             String nombre,
             GrupoPracticaDTO grupo,
-            Long valorCriticoMin,
-            Long valorCriticoMax,
+            Double valorCriticoMin,
+            Double valorCriticoMax,
             Boolean valorReservado,
             Integer cantHorasResultado,
             Boolean activa
