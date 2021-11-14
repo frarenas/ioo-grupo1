@@ -3,6 +3,7 @@ package ar.edu.uade.ui.paciente;
 import ar.edu.uade.controller.PacienteController;
 import ar.edu.uade.model.Sexo;
 import ar.edu.uade.model.dto.PacienteDTO;
+import ar.edu.uade.util.FormValidator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,13 +30,17 @@ public class EditarPacienteUI extends JDialog {
         self = this;
         this.pacienteController = pacienteController;
 
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
-        this.setLocationRelativeTo(owner);
         this.pack();
+        this.setLocationRelativeTo(owner);
 
         setModal(true);
+
+
 
         cbSexo.addItem(Sexo.FEMENINO);
         cbSexo.addItem(Sexo.MASCULINO);
@@ -51,16 +56,9 @@ public class EditarPacienteUI extends JDialog {
             txtEdad.setText(paciente.getEdad().toString());
         }
 
-        btnGuardar.addActionListener(e -> {
-            //setVisible(false);
-            guardarPaciente(paciente);
-            self.dispose();
-        });
+        btnGuardar.addActionListener(e -> guardarPaciente(paciente));
 
-        btnCancelar.addActionListener(e -> {
-            //setVisible(false);
-            self.dispose();
-        });
+        btnCancelar.addActionListener(e -> self.dispose());
     }
 
     public PacienteDTO showDialog() {
@@ -69,7 +67,9 @@ public class EditarPacienteUI extends JDialog {
     }
 
     private void guardarPaciente(PacienteDTO paciente) {
-        //TODO: validar
+        if(!validar()) {
+            return;
+        }
 
         if(paciente == null){
             paciente = new PacienteDTO(
@@ -92,5 +92,30 @@ public class EditarPacienteUI extends JDialog {
             pacienteController.modificarPaciente(paciente);
         }
         pacienteGuardado = paciente;
+        self.dispose();
+    }
+
+    private boolean validar() {
+        if(txtDni.getText().length() != 8) {
+            JOptionPane.showMessageDialog(null, "Revise el DNI.");
+            return false;
+        }
+        if(txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Revise el nombre.");
+            return false;
+        }
+        if(txtDomicilio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Revise el domicilio.");
+            return false;
+        }
+        if(!FormValidator.validateEmail(txtEmail.getText())) {
+            JOptionPane.showMessageDialog(null, "Revise el email.");
+            return false;
+        }
+        if(!FormValidator.validateAge(txtEdad.getText())) {
+            JOptionPane.showMessageDialog(null, "Revise la edad.");
+            return false;
+        }
+        return true;
     }
 }
