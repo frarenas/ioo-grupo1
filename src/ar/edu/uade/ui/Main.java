@@ -47,9 +47,9 @@ public class Main {
         PracticaController.grupoPracticaDB.put(grupo2.getId(), grupo2);
         PracticaController.grupoPracticaDB.put(grupo3.getId(), grupo3);
 
-        Practica practica1 = new Practica(1L,"Practica 1", grupo1,10L,100L,false,12,true);
-        Practica practica2 = new Practica(2L,"Practica 2", grupo2,20L,200L,true,24,true);
-        Practica practica3 = new Practica(3L,"Practica 3", grupo3,30L,300L,false,48,true);
+        Practica practica1 = new Practica(1L,"Practica 1", grupo1,10D,100D,false,12,true);
+        Practica practica2 = new Practica(2L,"Practica 2", grupo2,20D,200D,true,24,true);
+        Practica practica3 = new Practica(3L,"Practica 3", grupo3,30D,300D,false,48,true);
 
         PracticaController.practicaDB.put(practica1.getCodigo(), practica1);
         PracticaController.practicaDB.put(practica2.getCodigo(), practica2);

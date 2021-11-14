@@ -3,17 +3,17 @@ package ar.edu.uade.model;
 import ar.edu.uade.model.dto.ResultadoPeticionDTO;
 
 public class ResultadoPeticion {
-    private Long resultado;
+    private Double resultado;
 
     public ResultadoPeticion(ResultadoPeticionDTO resultadoPeticionDTO) {
         this.resultado = resultadoPeticionDTO.getResultado();
     }
 
-    public Long getResultado() {
+    public Double getResultado() {
         return resultado;
     }
 
-    public void setResultado(Long resultado) {
+    public void setResultado(Double resultado) {
         this.resultado = resultado;
     }
 

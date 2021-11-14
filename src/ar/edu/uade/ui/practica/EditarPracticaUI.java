@@ -4,10 +4,12 @@ package ar.edu.uade.ui.practica;
 import ar.edu.uade.controller.PracticaController;
 import ar.edu.uade.model.dto.GrupoPracticaDTO;
 import ar.edu.uade.model.dto.PracticaDTO;
+import ar.edu.uade.util.FormValidator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 public class EditarPracticaUI extends JDialog {
     private JCheckBox chkActiva;
@@ -33,11 +35,13 @@ public class EditarPracticaUI extends JDialog {
         self = this;
         this.practicaController = practicaController;
 
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
-        this.setLocationRelativeTo(owner);
         this.pack();
+        this.setLocationRelativeTo(owner);
 
         setModal(true);
 
@@ -50,7 +54,7 @@ public class EditarPracticaUI extends JDialog {
             txtCodigo.setEnabled(false);
             txtCodigo.setText(String.valueOf(practica.getCodigo()));
             txtNombre.setText(practica.getNombre());
-            cbGrupo.setSelectedItem(practica.getGrupo());
+            setComboPGrupo(practica.getGrupo().getId());
             txtValCriticoMin.setText(String.valueOf(practica.getValorCriticoMin()));
             txtValCriticoMax.setText(String.valueOf(practica.getValorCriticoMax()));
             chkReservado.setSelected(practica.getValorReservado());
@@ -58,10 +62,7 @@ public class EditarPracticaUI extends JDialog {
             chkActiva.setSelected(practica.getActiva());
         }
 
-        btnGuardar.addActionListener(e -> {
-            guardarPractica(practica);
-            self.dispose();
-        });
+        btnGuardar.addActionListener(e -> guardarPractica(practica));
 
         btnCancelar.addActionListener(e -> self.dispose());
     }
@@ -72,15 +73,17 @@ public class EditarPracticaUI extends JDialog {
     }
 
     private void guardarPractica(PracticaDTO practica) {
-        //TODO: validar
+        if(!validar()) {
+            return;
+        }
 
         if(practica == null){
             practica = new PracticaDTO(
                     Long.valueOf(txtCodigo.getText()),
                     txtNombre.getText(),
                     (GrupoPracticaDTO) cbGrupo.getSelectedItem(),
-                    Long.valueOf(txtValCriticoMin.getText()),
-                    Long.valueOf(txtValCriticoMax.getText()),
+                    Double.valueOf(txtValCriticoMin.getText()),
+                    Double.valueOf(txtValCriticoMax.getText()),
                     chkReservado.isSelected(),
                     Integer.valueOf(txtHorasResultado.getText()),
                     chkActiva.isSelected()
@@ -91,8 +94,8 @@ public class EditarPracticaUI extends JDialog {
             practica.setCodigo(Long.valueOf(txtCodigo.getText()));
             practica.setNombre(txtNombre.getText());
             practica.setGrupo((GrupoPracticaDTO) cbGrupo.getSelectedItem());
-            practica.setValorCriticoMin(Long.valueOf(txtValCriticoMin.getText()));
-            practica.setValorCriticoMax(Long.valueOf(txtValCriticoMax.getText()));
+            practica.setValorCriticoMin(Double.valueOf(txtValCriticoMin.getText()));
+            practica.setValorCriticoMax(Double.valueOf(txtValCriticoMax.getText()));
             practica.setValorReservado(chkReservado.isSelected());
             practica.setCantHorasResultado(Integer.valueOf(txtHorasResultado.getText()));
             practica.setActiva(chkActiva.isSelected());
@@ -100,5 +103,38 @@ public class EditarPracticaUI extends JDialog {
             practicaController.modificacionPractica(practica);
         }
         practicaGuardada = practica;
+        self.dispose();
+    }
+
+    private void setComboPGrupo(Long idGrupo) {
+        for (int i = 0; i < cbGrupo.getItemCount(); i++) {
+            if(Objects.equals(cbGrupo.getItemAt(i).getId(), idGrupo)) {
+                cbGrupo.setSelectedIndex(i);
+            }
+        }
+    }
+
+    private boolean validar() {
+        if(!FormValidator.validateNumber(txtCodigo.getText())) {
+            JOptionPane.showMessageDialog(this, "Revise el código.");
+            return false;
+        }
+        if(txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Revise el nombre.");
+            return false;
+        }
+        if(!FormValidator.validateLong(txtValCriticoMin.getText())) {
+            JOptionPane.showMessageDialog(null, "Revise el valor crítico mínimo.");
+            return false;
+        }
+        if(!FormValidator.validateLong(txtValCriticoMax.getText())) {
+            JOptionPane.showMessageDialog(null, "Revise el valor crítico máximo.");
+            return false;
+        }
+        if(!FormValidator.validateNumber(txtHorasResultado.getText())) {
+            JOptionPane.showMessageDialog(null, "Revise las horas para obtener el resultado.");
+            return false;
+        }
+        return true;
     }
 }
