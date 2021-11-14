@@ -23,7 +23,7 @@ public class UsuarioController {
         return instance;
     }
 
-    public void altaUsuario(
+    public UsuarioDTO altaUsuario(
             String nombreUsuario,
             String email,
             String contrasena,
@@ -34,6 +34,7 @@ public class UsuarioController {
             Rol rol) {
         Usuario usuario = new Usuario(nombreUsuario, email, contrasena, nombre, domicilio, dni, fechaNacimiento, rol);
         usuarioDB.put(dni, usuario);
+        return UsuarioDTO.fromEntity(usuario);
     }
 
     public void modificarUsuario(
@@ -80,7 +81,7 @@ public class UsuarioController {
 
         if (usuarioLogueado != null) {
             return new ResultadoOperacion(true, null);
-        }else {
+        } else {
             return new ResultadoOperacion(false, "Usuario o contraseña incorrecta.");
         }
     }

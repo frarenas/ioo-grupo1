@@ -2,6 +2,7 @@ package ar.edu.uade.ui.usuario;
 
 import ar.edu.uade.controller.UsuarioController;
 import ar.edu.uade.model.Rol;
+import ar.edu.uade.model.dto.PracticaDTO;
 import ar.edu.uade.model.dto.UsuarioDTO;
 
 import javax.swing.*;
@@ -32,6 +33,7 @@ public class EditarUsuarioUI extends JDialog {
     private JPanel pnlPrincipalUsuario;
 
     private EditarUsuarioUI self;
+    private UsuarioDTO usuarioGuardado = null;
 
     public EditarUsuarioUI(Window owner, UsuarioDTO usuarioDTO) {
         super(owner, usuarioDTO == null ? "Nuevo Usuario" : "Editar Usuario");
@@ -108,7 +110,7 @@ public class EditarUsuarioUI extends JDialog {
                 showMessageDialog(null, "Debe completar todos los campos para continuar");
 
             } else {
-                usuarioController.altaUsuario(
+                usuarioGuardado = usuarioController.altaUsuario(
                         txtNombreUsuario.getText(),
                         txtEmail.getText(),
                         String.valueOf(txtContrasena.getPassword()),
@@ -117,10 +119,16 @@ public class EditarUsuarioUI extends JDialog {
                         txtDNI.getText(),
                         Date.from(LocalDate.parse(txtFechaNacimiento.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")).atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         (Rol) txtRol.getSelectedItem());
+                self.dispose();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            showMessageDialog(null, "Error al guardar el usuario -> "+e.getMessage());
+            showMessageDialog(null, "Error al guardar el usuario -> " + e.getMessage());
         }
+    }
+
+    public UsuarioDTO showDialog() {
+        setVisible(true);
+        return usuarioGuardado;
     }
 }

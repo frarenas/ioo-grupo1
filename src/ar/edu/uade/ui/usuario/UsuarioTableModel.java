@@ -2,6 +2,8 @@ package ar.edu.uade.ui.usuario;
 
 import ar.edu.uade.controller.UsuarioController;
 import ar.edu.uade.model.Usuario;
+import ar.edu.uade.model.dto.PacienteDTO;
+import ar.edu.uade.model.dto.PracticaDTO;
 import ar.edu.uade.model.dto.UsuarioDTO;
 
 import javax.swing.*;
@@ -72,8 +74,11 @@ public class UsuarioTableModel extends AbstractTableModel {
                     JOptionPane.getFrameForComponent(button),
                     UsuarioDTO.fromEntity(usuarios.get(rowIndex))
             );
-            editarUsuarioUI.setVisible(true);
-            fireTableDataChanged();
+            UsuarioDTO usuarioGuardado = editarUsuarioUI.showDialog();
+            if (usuarioGuardado != null){
+                usuarios.set(rowIndex, new Usuario(usuarioGuardado));
+                fireTableDataChanged();
+            }
         });
         return button;
     }
@@ -87,5 +92,10 @@ public class UsuarioTableModel extends AbstractTableModel {
             fireTableDataChanged();
         });
         return button;
+    }
+
+    public void actualizarTabla(UsuarioDTO usuarioDto){
+        this.usuarios.add(new Usuario(usuarioDto));
+        fireTableDataChanged();
     }
 }

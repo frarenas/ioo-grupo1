@@ -2,6 +2,8 @@ package ar.edu.uade.ui.usuario;
 
 import ar.edu.uade.controller.UsuarioController;
 import ar.edu.uade.model.Usuario;
+import ar.edu.uade.model.dto.PracticaDTO;
+import ar.edu.uade.model.dto.UsuarioDTO;
 import ar.edu.uade.util.JTableButtonMouseListener;
 import ar.edu.uade.util.JTableButtonRenderer;
 
@@ -33,7 +35,12 @@ public class UsuarioUI {
             EditarUsuarioUI editarUsuarioUI = new EditarUsuarioUI(
                     JOptionPane.getFrameForComponent(pnlPrincipal),
                     null);
-            editarUsuarioUI.setVisible(true);
+
+            UsuarioDTO nuevoUsuario = editarUsuarioUI.showDialog();
+            if (nuevoUsuario != null){
+                usuarioTableModel.actualizarTabla(nuevoUsuario);
+            }
+
         });
     }
 
