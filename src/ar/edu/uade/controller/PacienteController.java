@@ -1,6 +1,7 @@
 package ar.edu.uade.controller;
 
 import ar.edu.uade.model.Paciente;
+import ar.edu.uade.model.ResultadoOperacion;
 import ar.edu.uade.model.Sexo;
 import ar.edu.uade.model.dto.EstudioDTO;
 import ar.edu.uade.model.dto.PacienteDTO;
@@ -83,7 +84,7 @@ public class PacienteController {
         );
     }
 
-    public String bajaPaciente(
+    public ResultadoOperacion bajaPaciente(
             String dni
     ) {
         PeticionController peticionController = PeticionController.getInstance();
@@ -102,9 +103,9 @@ public class PacienteController {
         }
         if (!peticionesFinalizadas){
             pacienteDB.remove(dni);
-            return "Se elimino el paciente correctamente";
+            return new ResultadoOperacion(true, "Se elimino el paciente correctamente");
         }else{
-            return "No se puede eliminar el paciente porque tiene peticiones finalizadas";
+            return new ResultadoOperacion(false, "No se puede eliminar el paciente porque tiene peticiones finalizadas");
         }
 
 

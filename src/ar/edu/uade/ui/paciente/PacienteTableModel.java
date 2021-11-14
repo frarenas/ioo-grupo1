@@ -1,6 +1,7 @@
 package ar.edu.uade.ui.paciente;
 
 import ar.edu.uade.controller.PacienteController;
+import ar.edu.uade.model.ResultadoOperacion;
 import ar.edu.uade.model.dto.PacienteDTO;
 
 import javax.swing.*;
@@ -70,9 +71,14 @@ public class PacienteTableModel extends AbstractTableModel {
     private JButton setBotonEliminar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            pacienteController.bajaPaciente(pacientes.get(rowIndex).getDni());
-            pacientes.remove(rowIndex);
-            fireTableDataChanged();
+            ResultadoOperacion resultadoOperacion = pacienteController.bajaPaciente(pacientes.get(rowIndex).getDni());
+            if (resultadoOperacion.isExito()) {
+                pacientes.remove(rowIndex);
+                fireTableDataChanged();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, resultadoOperacion.getMensaje());
+            }
         });
         return button;
     }
