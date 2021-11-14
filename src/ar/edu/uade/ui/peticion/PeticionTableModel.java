@@ -2,9 +2,12 @@ package ar.edu.uade.ui.peticion;
 
 import ar.edu.uade.controller.PeticionController;
 import ar.edu.uade.model.Peticion;
+import ar.edu.uade.model.dto.PeticionDTO;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class PeticionTableModel extends AbstractTableModel {
@@ -12,6 +15,7 @@ public class PeticionTableModel extends AbstractTableModel {
     private final List<Peticion> peticiones;
     protected String[] columnNames = new String[]{"Id", "Paciente", "Obra social", "Fecha carga", "Estudios", "Fecha entrega", "Sucursal", "Editar", "Eliminar"};
     protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
+    private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public PeticionTableModel(List<Peticion> peticiones) {
         this.peticiones = peticiones;
@@ -38,16 +42,26 @@ public class PeticionTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 0: return peticiones.get(rowIndex).getId();
-            case 1: return peticiones.get(rowIndex).getPaciente();
-            case 2: return peticiones.get(rowIndex).getObraSocial();
-            case 3: return peticiones.get(rowIndex).getFechaCarga();
-            case 4: return peticiones.get(rowIndex).getEstudios();
-            case 5: return peticiones.get(rowIndex).getFechaEntrega();
-            case 6: return peticiones.get(rowIndex).getSucursal();
-            case 7: return setBotonEditar(getColumnName(columnIndex), rowIndex);
-            case 8: return setBotonEliminar(getColumnName(columnIndex), rowIndex);
-            default: return null;
+            case 0:
+                return peticiones.get(rowIndex).getId();
+            case 1:
+                return peticiones.get(rowIndex).getPaciente().getDni();
+            case 2:
+                return peticiones.get(rowIndex).getObraSocial();
+            case 3:
+                return dateFormat.format(peticiones.get(rowIndex).getFechaCarga());
+            case 4:
+                return peticiones.get(rowIndex).getEstudios();
+            case 5:
+                return dateFormat.format(peticiones.get(rowIndex).getFechaEntrega());
+            case 6:
+                return peticiones.get(rowIndex).getSucursal().getNumero();
+            case 7:
+                return setBotonEditar(getColumnName(columnIndex), rowIndex);
+            case 8:
+                return setBotonEliminar(getColumnName(columnIndex), rowIndex);
+            default:
+                return null;
         }
     }
 
@@ -56,7 +70,7 @@ public class PeticionTableModel extends AbstractTableModel {
         button.addActionListener(e -> {
             EditarPeticionUI editarPeticionUI = new EditarPeticionUI(
                     JOptionPane.getFrameForComponent(button),
-                    peticiones.get(rowIndex)
+                    PeticionDTO.fromEntity(peticiones.get(rowIndex))
             );
             editarPeticionUI.setVisible(true);
         });

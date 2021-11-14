@@ -32,8 +32,7 @@ public class UsuarioUI {
         btnAgregar.addActionListener(e -> {
             EditarUsuarioUI editarUsuarioUI = new EditarUsuarioUI(
                     JOptionPane.getFrameForComponent(pnlPrincipal),
-                    null
-            );
+                    null);
             editarUsuarioUI.setVisible(true);
         });
     }

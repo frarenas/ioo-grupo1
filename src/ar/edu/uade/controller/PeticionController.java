@@ -32,12 +32,10 @@ public class PeticionController {
             PacienteDTO paciente,
             String obraSocial,
             Date fechaCarga,
-            List<EstudioDTO> estudioDtos,
             Date fechaEntrega,
             SucursalDTO sucursal
     ) {
-        List<Estudio> estudios = estudioDtos.stream().map(Estudio::new).collect(Collectors.toList());
-        Peticion peticion = new Peticion(id, new Paciente(paciente), obraSocial, fechaCarga, estudios, fechaEntrega, new Sucursal(sucursal));
+        Peticion peticion = new Peticion(id, new Paciente(paciente), obraSocial, fechaCarga, null, fechaEntrega, new Sucursal(sucursal));
         peticionDB.put(id, peticion);
     }
 

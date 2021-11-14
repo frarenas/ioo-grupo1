@@ -6,8 +6,10 @@ import ar.edu.uade.model.dto.EstudioDTO;
 import ar.edu.uade.model.dto.PacienteDTO;
 import ar.edu.uade.model.dto.PeticionDTO;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PacienteController {
 
@@ -59,7 +61,7 @@ public class PacienteController {
             String dni
     ) {
         PeticionController peticionController = PeticionController.getInstance();
-        Boolean peticionesFinalizadas = false;
+        boolean peticionesFinalizadas = false;
 
         for (PeticionDTO peticionDTO: peticionController.buscarPeticionesDelPaciente(dni)) {
 
@@ -88,5 +90,10 @@ public class PacienteController {
     ) {
         Paciente paciente = pacienteDB.get(dni);
         return PacienteDTO.fromEntity(paciente);
+    }
+
+
+    public Collection<PacienteDTO> obtenerPacientes(){
+        return pacienteDB.values().stream().map(PacienteDTO::fromEntity).collect(Collectors.toList());
     }
 }

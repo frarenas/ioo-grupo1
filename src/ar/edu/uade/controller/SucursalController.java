@@ -7,9 +7,11 @@ import ar.edu.uade.model.dto.PeticionDTO;
 import ar.edu.uade.model.dto.SucursalDTO;
 import ar.edu.uade.model.dto.UsuarioDTO;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SucursalController {
 
@@ -50,7 +52,7 @@ public class SucursalController {
 
     public String bajaSucursal(long numero, SucursalDTO sucursalDestino) {
         PeticionController peticionController = PeticionController.getInstance();
-        Boolean peticionesFinalizadas = false;
+        boolean peticionesFinalizadas = false;
 
         List<PeticionDTO> peticionDTOS = peticionController.buscarPeticionesPorSucursal(numero);
 
@@ -73,12 +75,14 @@ public class SucursalController {
         }else{
             return "No se puede eliminar la sucursal porque tiene peticiones finalizadas";
         }
-
-
     }
 
     public SucursalDTO buscarSucursal(long numero) {
         Sucursal sucursal = sucursalDB.get(numero);
         return SucursalDTO.fromEntity(sucursal);
+    }
+
+    public Collection<SucursalDTO> obtenerSucursales() {
+        return sucursalDB.values().stream().map(SucursalDTO::fromEntity).collect(Collectors.toList());
     }
 }

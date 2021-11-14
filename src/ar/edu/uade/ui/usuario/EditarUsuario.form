@@ -74,7 +74,7 @@
               <text value="Contrasena"/>
             </properties>
           </component>
-          <component id="33d25" class="javax.swing.JTextField" binding="txtContrasena">
+          <component id="f97b8" class="javax.swing.JPasswordField" binding="txtContrasena">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -128,7 +128,7 @@
               <text value="DNI"/>
             </properties>
           </component>
-          <component id="3356b" class="javax.swing.JTextField" binding="txtDNI">
+          <component id="f01c3" class="javax.swing.JFormattedTextField" binding="txtDNI">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -146,7 +146,7 @@
               <text value="Fecha nacimiento"/>
             </properties>
           </component>
-          <component id="c6a91" class="javax.swing.JTextField" binding="txtFechaNacimiento">
+          <component id="425b6" class="javax.swing.JFormattedTextField" binding="txtFechaNacimiento">
             <constraints>
               <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>

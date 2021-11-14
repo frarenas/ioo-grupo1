@@ -5,22 +5,26 @@ import ar.edu.uade.model.Rol;
 import ar.edu.uade.model.dto.UsuarioDTO;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class EditarUsuarioUI extends JDialog {
     private JTextField txtNombreUsuario;
     private JTextField txtEmail;
-    private JTextField txtContrasena;
+    private JPasswordField txtContrasena;
     private JTextField txtNombre;
     private JTextField txtDomicilio;
-    private JTextField txtDNI;
-    private JTextField txtFechaNacimiento;
+    private JFormattedTextField txtDNI;
+    private JFormattedTextField txtFechaNacimiento;
     private JComboBox txtRol;
 
     private JButton btnCancelar;
@@ -29,44 +33,58 @@ public class EditarUsuarioUI extends JDialog {
 
     private EditarUsuarioUI self;
 
-    public EditarUsuarioUI(Window owner, UsuarioDTO usuario) {
-        super(owner, usuario == null ? "Nuevo Usuario" : "Editar Usuario");
+    public EditarUsuarioUI(Window owner, UsuarioDTO usuarioDTO) {
+        super(owner, usuarioDTO == null ? "Nuevo Usuario" : "Editar Usuario");
+        try {
+            self = this;
 
-        self = this;
+            this.setContentPane(pnlPrincipalUsuario);
+            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            this.setResizable(false);
+            this.setLocationRelativeTo(owner);
+            this.pack();
+            this.setModal(true);
+            this.setActions();
 
-        this.setContentPane(pnlPrincipalUsuario);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setResizable(false);
-        this.setLocationRelativeTo(owner);
-        this.pack();
+            MaskFormatter maskFechaNacimiento = new MaskFormatter("##/##/####");
+            maskFechaNacimiento.install(txtFechaNacimiento);
 
-        setModal(true);
-        setActions();
+            MaskFormatter maskDni = new MaskFormatter("########");
+            maskDni.install(txtDNI);
 
+            loadRoles();
+
+            if (usuarioDTO != null) {
+                completarFormulario(usuarioDTO);
+            }
+
+            btnGuardar.addActionListener(e -> {
+                guardarUsuario();
+                self.dispose();
+            });
+        } catch (ParseException e) {
+            e.printStackTrace();
+            showMessageDialog(null, "Error al construir el componente");
+        }
+    }
+
+    private void completarFormulario(UsuarioDTO usuario) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        txtNombreUsuario.setText(usuario.getDni());
+        txtEmail.setText(usuario.getEmail());
+        txtContrasena.setText(usuario.getContrasena());
+        txtNombre.setText(usuario.getNombre());
+        txtDomicilio.setText(usuario.getDomicilio());
+        txtDNI.setText(usuario.getDni());
+        txtFechaNacimiento.setText(dateFormat.format(usuario.getFechaNacimiento()));
+        txtRol.setSelectedItem(usuario.getRol());
+    }
+
+    private void loadRoles() {
         txtRol.addItem(Rol.ADMINISTRADOR);
         txtRol.addItem(Rol.LABORISTA);
         txtRol.addItem(Rol.RECEPCION);
-
-        if (usuario != null) {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String strDate = dateFormat.format(usuario.getFechaNacimiento());
-
-            txtNombreUsuario.setText(usuario.getDni());
-            txtEmail.setText(usuario.getEmail());
-            txtContrasena.setText(usuario.getContrasena());
-            txtNombre.setText(usuario.getNombre());
-            txtDomicilio.setText(usuario.getDomicilio());
-            txtDNI.setText(usuario.getDni());
-            txtFechaNacimiento.setText(strDate);
-            txtRol.setSelectedItem(usuario.getRol());
-        }
-
-        btnGuardar.addActionListener(e -> {
-            guardarUsuario(usuario);
-            self.dispose();
-        });
     }
-
 
     private void setActions() {
         btnCancelar.addActionListener(e -> {
@@ -74,25 +92,35 @@ public class EditarUsuarioUI extends JDialog {
         });
     }
 
-
-    private void guardarUsuario(UsuarioDTO usuarioDTO){
-        //TODO: validar
+    private void guardarUsuario() {
         try {
             UsuarioController usuarioController = UsuarioController.getInstance();
 
-            usuarioController.altaUsuario(
-                    txtNombreUsuario.getText(),
-                    txtEmail.getText(),
-                    txtContrasena.getText(),
-                    txtNombre.getText(),
-                    txtDomicilio.getText(),
-                    txtDNI.getText(),
-                    Date.from(LocalDate.parse(txtFechaNacimiento.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")).atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                    (Rol) txtRol.getSelectedItem());
+            if (txtNombreUsuario.getText().trim().isEmpty() ||
+                    txtEmail.getText().isEmpty() ||
+                    txtContrasena.getPassword().length == 0 ||
+                    txtNombre.getText().isEmpty() ||
+                    txtDomicilio.getText().isEmpty() ||
+                    txtDNI.getText().isEmpty() ||
+                    txtEmail.getText().isEmpty() ||
+                    txtFechaNacimiento.getText().isEmpty()) {
 
+                showMessageDialog(null, "Debe completar todos los campos para continuar");
+
+            } else {
+                usuarioController.altaUsuario(
+                        txtNombreUsuario.getText(),
+                        txtEmail.getText(),
+                        String.valueOf(txtContrasena.getPassword()),
+                        txtNombre.getText(),
+                        txtDomicilio.getText(),
+                        txtDNI.getText(),
+                        Date.from(LocalDate.parse(txtFechaNacimiento.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")).atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        (Rol) txtRol.getSelectedItem());
+            }
         } catch (Exception e) {
-            //TODO validar
             e.printStackTrace();
+            showMessageDialog(null, "Error al guardar el usuario -> "+e.getMessage());
         }
     }
 }

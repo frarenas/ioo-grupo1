@@ -6,13 +6,16 @@ import ar.edu.uade.model.dto.UsuarioDTO;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class UsuarioTableModel extends AbstractTableModel {
 
     private final List<Usuario> usuarios;
-    protected String[] columnNames = new String[]{"NombreUsuario", "Email", "Contraseña", "Nombre", "Domicilio", "DNI", "Fecha nacimiento", "Rol", "Editar", "Eliminar"};
-    protected Class[] columnClasses = new Class[]{String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
+    protected String[] columnNames = new String[]{"NombreUsuario", "Email", "Nombre", "Domicilio", "DNI", "Fecha nacimiento", "Rol", "Editar", "Eliminar"};
+    protected Class[] columnClasses = new Class[]{String.class, String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
+    private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public UsuarioTableModel(List<Usuario> usuarios) {
         this.usuarios = usuarios;
@@ -44,20 +47,18 @@ public class UsuarioTableModel extends AbstractTableModel {
             case 1:
                 return usuarios.get(rowIndex).getEmail();
             case 2:
-                return usuarios.get(rowIndex).getContrasena();
-            case 3:
                 return usuarios.get(rowIndex).getNombre();
-            case 4:
+            case 3:
                 return usuarios.get(rowIndex).getDomicilio();
-            case 5:
+            case 4:
                 return usuarios.get(rowIndex).getDni();
+            case 5:
+                return dateFormat.format(usuarios.get(rowIndex).getFechaNacimiento());
             case 6:
-                return usuarios.get(rowIndex).getFechaNacimiento();
-            case 7:
                 return usuarios.get(rowIndex).getRol();
-            case 8:
+            case 7:
                 return setBotonEditar(getColumnName(columnIndex), rowIndex);
-            case 9:
+            case 8:
                 return setBotonEliminar(getColumnName(columnIndex), rowIndex);
             default:
                 return null;
@@ -72,6 +73,7 @@ public class UsuarioTableModel extends AbstractTableModel {
                     UsuarioDTO.fromEntity(usuarios.get(rowIndex))
             );
             editarUsuarioUI.setVisible(true);
+            fireTableDataChanged();
         });
         return button;
     }
