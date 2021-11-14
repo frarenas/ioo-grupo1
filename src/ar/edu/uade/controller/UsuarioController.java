@@ -1,5 +1,6 @@
 package ar.edu.uade.controller;
 
+import ar.edu.uade.model.ResultadoOperacion;
 import ar.edu.uade.model.Rol;
 import ar.edu.uade.model.Usuario;
 import ar.edu.uade.model.dto.UsuarioDTO;
@@ -9,6 +10,7 @@ import java.util.*;
 public class UsuarioController {
 
     public static Map<String, Usuario> usuarioDB = new HashMap<>();
+    public static Usuario usuarioLogueado;
     private static UsuarioController instance;
 
     private UsuarioController() {
@@ -69,5 +71,17 @@ public class UsuarioController {
     public UsuarioDTO buscarUsuario(String dni) {
         Usuario usuario = usuarioDB.get(dni);
         return UsuarioDTO.fromEntity(usuario);
+    }
+
+    public ResultadoOperacion login(String usuario, String contrasena) {
+        usuarioLogueado = usuarioDB.values().stream()
+                .filter(x -> Objects.equals(x.getNombreUsuario(), usuario) && Objects.equals(x.getContrasena(), contrasena))
+                .findFirst().orElse(null);
+
+        if (usuarioLogueado != null) {
+            return new ResultadoOperacion(true, null);
+        }else {
+            return new ResultadoOperacion(false, "Usuario o contraseña incorrecta.");
+        }
     }
 }

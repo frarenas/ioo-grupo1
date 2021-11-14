@@ -13,7 +13,7 @@ public class Main {
     }
 
     private static void init() {
-        Usuario usuario1 = new Usuario("Admin", "admin@example.com", "123456", "Usuario Uno", "Domicilio 1234", "11111111", new Date(121231331), Rol.ADMINISTRADOR);
+        Usuario usuario1 = new Usuario("admin", "admin@example.com", "123456", "Usuario Uno", "Domicilio 1234", "11111111", new Date(121231331), Rol.ADMINISTRADOR);
         Usuario usuario2 = new Usuario("laborista", "fulanito@example.com", "123456", "Usuario Dos", "Domicilio 3456", "22222222", new Date(121231331), Rol.LABORISTA);
         Usuario usuario3 = new Usuario("recepcion", "fulanita@example.com", "123456", "Usuario Tres", "Domicilio 5678", "333333333", new Date(121231331), Rol.RECEPCION);
 
