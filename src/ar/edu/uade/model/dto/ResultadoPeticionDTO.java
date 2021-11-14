@@ -1,20 +1,19 @@
 package ar.edu.uade.model.dto;
 
-import ar.edu.uade.model.Peticion;
 import ar.edu.uade.model.ResultadoPeticion;
 
 public class ResultadoPeticionDTO {
-    private Long resultado;
+    private Double resultado;
 
-    public ResultadoPeticionDTO(Long resultado) {
+    public ResultadoPeticionDTO(Double resultado) {
         this.resultado = resultado;
     }
 
-    public Long getResultado() {
+    public Double getResultado() {
         return resultado;
     }
 
-    public void setResultado(Long resultado) {
+    public void setResultado(Double resultado) {
         this.resultado = resultado;
     }
 

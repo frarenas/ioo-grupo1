@@ -76,13 +76,13 @@ public class EditarPeticionUI extends JDialog {
     }
 
     private void cargarSucursales() {
-        for (SucursalDTO sucursalDto : SucursalController.getInstance().obtenerSucursales()) {
+        for (SucursalDTO sucursalDto : SucursalController.getInstance().listarSucursales()) {
             txtNroSucursal.addItem(sucursalDto.getNumero());
         }
     }
 
     private void cargarDni() {
-        for (PacienteDTO pacienteDTO : PacienteController.getInstance().obtenerPacientes()) {
+        for (PacienteDTO pacienteDTO : PacienteController.getInstance().listarPacientes()) {
             txtDniPaciente.addItem(pacienteDTO.getDni());
         }
     }

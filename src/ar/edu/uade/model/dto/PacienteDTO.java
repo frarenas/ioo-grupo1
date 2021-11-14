@@ -3,6 +3,9 @@ package ar.edu.uade.model.dto;
 import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.Sexo;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PacienteDTO {
     private String dni;
     private String nombre;
@@ -77,5 +80,9 @@ public class PacienteDTO {
                 paciente.getSexo(),
                 paciente.getEdad()
         );
+    }
+
+    public static List<PacienteDTO> fromEntities(List<Paciente> pacientes) {
+        return pacientes.stream().map(PacienteDTO::fromEntity).collect(Collectors.toList());
     }
 }

@@ -1,21 +1,28 @@
 package ar.edu.uade.ui;
 
+import ar.edu.uade.controller.PacienteController;
+import ar.edu.uade.controller.PracticaController;
+import ar.edu.uade.controller.UsuarioController;
+import ar.edu.uade.model.Rol;
 import ar.edu.uade.ui.paciente.PacienteUI;
+import ar.edu.uade.ui.sucursal.SucursalUI;
+import ar.edu.uade.ui.practica.PracticaUI;
 import ar.edu.uade.ui.peticion.PeticionUI;
 import ar.edu.uade.ui.usuario.UsuarioUI;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Menu {
 
     JFrame rootFrame;
     private JPanel pnlPrincipal;
 
-
-    private JButton button1;
+    private JMenuItem mnuUsuarios;
 
     public Menu() {
-        rootFrame = new JFrame("Clínica");
+        rootFrame = new JFrame("Laboratorio");
         JMenuBar mb = setMenu();
 
         rootFrame.setJMenuBar(mb);
@@ -30,28 +37,36 @@ public class Menu {
 
         Login login = new Login(this.rootFrame, "Login");
         login.setVisible(true);
+        login.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                mnuUsuarios.setVisible(UsuarioController.usuarioLogueado.getRol() == Rol.ADMINISTRADOR);
+            }
+        });
     }
 
     private JMenuBar setMenu() {
         JMenuBar mb = new JMenuBar();
         JMenu mnuAbm = new JMenu("ABM");
-        JMenu mnuConsultas = new JMenu("Consultas");
         JMenuItem mnuPacientes = new JMenuItem("Pacientes");
         JMenuItem mnuSucursales = new JMenuItem("Sucursales");
         JMenuItem mnuUsuarios = new JMenuItem("Usuarios");
         JMenuItem mnuPeticiones = new JMenuItem("Peticiones");
+        JMenuItem mnuPracticas = new JMenuItem("Prácticas");
 
-        mnuPacientes.addActionListener(e -> mostrarPantalla(new PacienteUI().pnlPrincipal));
+        mnuPacientes.addActionListener(e -> mostrarPantalla(new PacienteUI(PacienteController.getInstance()).pnlPrincipal));
+        mnuSucursales.addActionListener(e -> mostrarPantalla(new SucursalUI().pnlPrincipal));
         mnuUsuarios.addActionListener(e -> mostrarPantalla(new UsuarioUI().pnlPrincipal));
+        mnuPracticas.addActionListener(e -> mostrarPantalla(new PracticaUI(PracticaController.getInstance()).pnlPrincipal));
         mnuPeticiones.addActionListener(e -> mostrarPantalla(new PeticionUI().pnlPrincipal));
 
         mnuAbm.add(mnuPacientes);
         mnuAbm.add(mnuSucursales);
         mnuAbm.add(mnuUsuarios);
+        mnuAbm.add(mnuPracticas);
         mnuAbm.add(mnuPeticiones);
 
         mb.add(mnuAbm);
-        mb.add(mnuConsultas);
 
         return mb;
     }

@@ -9,6 +9,12 @@ public class Estudio {
 
     public Estudio() {}
 
+    public Estudio(Integer codigo, Practica practica, ResultadoPeticion resultadoPeticion) {
+        this.codigo = codigo;
+        this.practica = practica;
+        this.resultadoPeticion = resultadoPeticion;
+    }
+
     public Estudio(EstudioDTO estudioDTO) {
         this.codigo = estudioDTO.getCodigo();
         this.practica = new Practica(estudioDTO.getPractica());
@@ -47,7 +53,7 @@ public class Estudio {
         return false;
     }
 
-    public void modificarResultado(Long valor){
+    public void modificarResultado(Double valor){
         if(resultadoPeticion != null)
             resultadoPeticion.setResultado(valor);
     }

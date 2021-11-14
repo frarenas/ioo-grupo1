@@ -1,9 +1,10 @@
 package ar.edu.uade.ui;
 
+import ar.edu.uade.controller.UsuarioController;
+import ar.edu.uade.model.ResultadoOperacion;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Login extends JDialog {
     private JPanel pnlPrincipal;
@@ -11,18 +12,20 @@ public class Login extends JDialog {
     private JTextField txtContrasena;
     private JButton btnLogin;
 
-    private Login self;
+    private final Login self;
 
     public Login(Window owner, String titulo) {
         super(owner, titulo);
 
         self = this;
 
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
-        this.setLocationRelativeTo(owner);
         this.pack();
+        this.setLocationRelativeTo(owner);
 
         setModal(true);
 
@@ -31,8 +34,34 @@ public class Login extends JDialog {
 
     private void setActions() {
         btnLogin.addActionListener(e -> {
-            self.dispose();
+            if(!validar()){
+                return;
+            }
+
+            String usuario = txtUsuario.getText();
+            String contrasena = txtContrasena.getText();
+
+            UsuarioController usuarioController = UsuarioController.getInstance();
+            ResultadoOperacion resultadoOperacion = usuarioController.login(usuario, contrasena);
+
+            if(resultadoOperacion.isExito()) {
+                self.dispose();
+            }else {
+                JOptionPane.showMessageDialog(null, resultadoOperacion.getMensaje());
+            }
         });
+    }
+
+    private boolean validar() {
+        if(txtUsuario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el usuario.");
+            return false;
+        }
+        if(txtContrasena.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese la contraseña.");
+            return false;
+        }
+        return true;
     }
 
 }

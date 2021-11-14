@@ -2,6 +2,9 @@ package ar.edu.uade.model.dto;
 
 import ar.edu.uade.model.Sucursal;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class SucursalDTO {
     private Long numero;
     private String direccion;
@@ -43,5 +46,9 @@ public class SucursalDTO {
                 sucursal.getDireccion(),
                 UsuarioDTO.fromEntity(sucursal.getResponsableTecnico())
         );
+    }
+
+    public static List<SucursalDTO> fromEntities(List<Sucursal> sucursales) {
+        return sucursales.stream().map(SucursalDTO::fromEntity).collect(Collectors.toList());
     }
 }

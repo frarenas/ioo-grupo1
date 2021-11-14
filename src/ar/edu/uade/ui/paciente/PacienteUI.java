@@ -1,13 +1,12 @@
 package ar.edu.uade.ui.paciente;
 
+import ar.edu.uade.model.dto.PacienteDTO;
 import ar.edu.uade.util.JTableButtonMouseListener;
 import ar.edu.uade.util.JTableButtonRenderer;
 import ar.edu.uade.controller.PacienteController;
-import ar.edu.uade.model.Paciente;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteUI {
@@ -15,11 +14,11 @@ public class PacienteUI {
     private JTable tblPacientes;
     private JButton btnAgregar;
 
-    public PacienteUI() {
+    public PacienteUI(PacienteController pacienteController) {
 
         //Datos tabla
-        List<Paciente> pacientes = new ArrayList<>(PacienteController.pacienteDB.values());
-        PacienteTableModel pacienteTableModel = new PacienteTableModel(pacientes);
+        List<PacienteDTO> pacientes = pacienteController.listarPacientes();
+        PacienteTableModel pacienteTableModel = new PacienteTableModel(pacienteController, pacientes);
         tblPacientes.setModel(pacienteTableModel);
 
         //Botones tabla
@@ -32,10 +31,13 @@ public class PacienteUI {
         btnAgregar.addActionListener(e -> {
             EditarPacienteUI editarPacienteUI = new EditarPacienteUI(
                     JOptionPane.getFrameForComponent(pnlPrincipal),
+                    pacienteController,
                     null
             );
-            editarPacienteUI.setVisible(true);
+            PacienteDTO pacienteGuardado = editarPacienteUI.showDialog();
+            if (pacienteGuardado != null){
+                pacienteTableModel.actualizarTabla(pacienteGuardado);
+            }
         });
     }
-
 }

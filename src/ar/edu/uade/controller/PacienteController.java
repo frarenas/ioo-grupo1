@@ -1,15 +1,16 @@
 package ar.edu.uade.controller;
 
 import ar.edu.uade.model.Paciente;
+import ar.edu.uade.model.ResultadoOperacion;
 import ar.edu.uade.model.Sexo;
 import ar.edu.uade.model.dto.EstudioDTO;
 import ar.edu.uade.model.dto.PacienteDTO;
 import ar.edu.uade.model.dto.PeticionDTO;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class PacienteController {
 
@@ -38,6 +39,19 @@ public class PacienteController {
         pacienteDB.put(dni, paciente);
     }
 
+    public void altaPaciente(
+            PacienteDTO paciente
+    ) {
+        altaPaciente(
+                paciente.getDni(),
+                paciente.getNombre(),
+                paciente.getDomicilio(),
+                paciente.getEmail(),
+                paciente.getSexo(),
+                paciente.getEdad()
+        );
+    }
+
     public void modificarPaciente(
             String dni,
             String nombre,
@@ -57,7 +71,20 @@ public class PacienteController {
         pacienteDB.put(dni, paciente);
     }
 
-    public String bajaPaciente(
+    public void modificarPaciente(
+            PacienteDTO paciente
+    ) {
+        modificarPaciente(
+                paciente.getDni(),
+                paciente.getNombre(),
+                paciente.getDomicilio(),
+                paciente.getEmail(),
+                paciente.getSexo(),
+                paciente.getEdad()
+        );
+    }
+
+    public ResultadoOperacion bajaPaciente(
             String dni
     ) {
         PeticionController peticionController = PeticionController.getInstance();
@@ -76,9 +103,9 @@ public class PacienteController {
         }
         if (!peticionesFinalizadas){
             pacienteDB.remove(dni);
-            return "Se elimino el paciente correctamente";
+            return new ResultadoOperacion(true, "Se elimino el paciente correctamente");
         }else{
-            return "No se puede eliminar el paciente porque tiene peticiones finalizadas";
+            return new ResultadoOperacion(false, "No se puede eliminar el paciente porque tiene peticiones finalizadas");
         }
 
 
@@ -92,8 +119,7 @@ public class PacienteController {
         return PacienteDTO.fromEntity(paciente);
     }
 
-
-    public Collection<PacienteDTO> obtenerPacientes(){
-        return pacienteDB.values().stream().map(PacienteDTO::fromEntity).collect(Collectors.toList());
+    public List<PacienteDTO> listarPacientes() {
+        return PacienteDTO.fromEntities(new ArrayList<>(pacienteDB.values()));
     }
 }

@@ -1,8 +1,8 @@
 package ar.edu.uade.ui.paciente;
 
 import ar.edu.uade.controller.PacienteController;
-import ar.edu.uade.model.Paciente;
-import ar.edu.uade.ui.Login;
+import ar.edu.uade.model.ResultadoOperacion;
+import ar.edu.uade.model.dto.PacienteDTO;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -10,11 +10,14 @@ import java.util.List;
 
 public class PacienteTableModel extends AbstractTableModel {
 
-    private final List<Paciente> pacientes;
+    private final PacienteController pacienteController;
+
+    private final List<PacienteDTO> pacientes;
     protected String[] columnNames = new String[] { "Nombre", "DNI", "Email", "Editar", "Eliminar" };
     protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, JButton.class, JButton.class};
 
-    public PacienteTableModel(List<Paciente> pacientes) {
+    public PacienteTableModel(PacienteController pacienteController, List<PacienteDTO> pacientes) {
+        this.pacienteController = pacienteController;
         this.pacientes = pacientes;
     }
 
@@ -53,9 +56,14 @@ public class PacienteTableModel extends AbstractTableModel {
         button.addActionListener(e -> {
             EditarPacienteUI editarPacienteUI = new EditarPacienteUI(
                     JOptionPane.getFrameForComponent(button),
+                    pacienteController,
                     pacientes.get(rowIndex)
             );
-            editarPacienteUI.setVisible(true);
+            PacienteDTO pacienteGuardado = editarPacienteUI.showDialog();
+            if (pacienteGuardado != null){
+                pacientes.set(rowIndex, pacienteGuardado);
+                fireTableDataChanged();
+            }
         });
         return button;
     }
@@ -63,11 +71,20 @@ public class PacienteTableModel extends AbstractTableModel {
     private JButton setBotonEliminar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            PacienteController pacienteController = PacienteController.getInstance();
-            pacienteController.bajaPaciente(pacientes.get(rowIndex).getDni());
-            pacientes.remove(rowIndex);
-            fireTableDataChanged();
+            ResultadoOperacion resultadoOperacion = pacienteController.bajaPaciente(pacientes.get(rowIndex).getDni());
+            if (resultadoOperacion.isExito()) {
+                pacientes.remove(rowIndex);
+                fireTableDataChanged();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, resultadoOperacion.getMensaje());
+            }
         });
         return button;
+    }
+
+    public void actualizarTabla(PacienteDTO paciente){
+        this.pacientes.add(paciente);
+        fireTableDataChanged();
     }
 }

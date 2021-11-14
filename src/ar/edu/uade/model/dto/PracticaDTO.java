@@ -1,19 +1,21 @@
 package ar.edu.uade.model.dto;
 
-import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.Practica;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PracticaDTO {
     private Long codigo;
     private String nombre;
     private GrupoPracticaDTO grupo;
-    private Long valorCriticoMin;
-    private Long valorCriticoMax;
+    private Double valorCriticoMin;
+    private Double valorCriticoMax;
     private Boolean valorReservado;
     private Integer cantHorasResultado;
     private Boolean activa;
 
-    public PracticaDTO(Long codigo, String nombre, GrupoPracticaDTO grupo, Long valorCriticoMin, Long valorCriticoMax, Boolean valorReservado, Integer cantHorasResultado, Boolean activa) {
+    public PracticaDTO(Long codigo, String nombre, GrupoPracticaDTO grupo, Double valorCriticoMin, Double valorCriticoMax, Boolean valorReservado, Integer cantHorasResultado, Boolean activa) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.grupo = grupo;
@@ -48,19 +50,19 @@ public class PracticaDTO {
         this.grupo = grupo;
     }
 
-    public Long getValorCriticoMin() {
+    public Double getValorCriticoMin() {
         return valorCriticoMin;
     }
 
-    public void setValorCriticoMin(Long valorCriticoMin) {
+    public void setValorCriticoMin(Double valorCriticoMin) {
         this.valorCriticoMin = valorCriticoMin;
     }
 
-    public Long getValorCriticoMax() {
+    public Double getValorCriticoMax() {
         return valorCriticoMax;
     }
 
-    public void setValorCriticoMax(Long valorCriticoMax) {
+    public void setValorCriticoMax(Double valorCriticoMax) {
         this.valorCriticoMax = valorCriticoMax;
     }
 
@@ -99,5 +101,9 @@ public class PracticaDTO {
                 practica.getCantHorasResultado(),
                 practica.getActiva()
         );
+    }
+
+    public static List<PracticaDTO> fromEntities(List<Practica> practicas) {
+        return practicas.stream().map(PracticaDTO::fromEntity).collect(Collectors.toList());
     }
 }
