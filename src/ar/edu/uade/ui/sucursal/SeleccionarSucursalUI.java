@@ -26,11 +26,13 @@ public class SeleccionarSucursalUI extends JDialog {
 
         self = this;
 
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         this.setContentPane(pnlPrincipal);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
         this.pack();
+        this.setLocationRelativeTo(owner);
 
         setModal(true);
 

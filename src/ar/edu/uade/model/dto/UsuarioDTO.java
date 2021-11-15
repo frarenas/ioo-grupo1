@@ -106,4 +106,9 @@ public class UsuarioDTO {
     public static List<UsuarioDTO> fromEntities(List<Usuario> usuarios) {
         return usuarios.stream().map(UsuarioDTO::fromEntity).collect(Collectors.toList());
     }
+
+    @Override
+    public String toString() {
+        return  nombre + " - DNI: " + dni;
+    }
 }

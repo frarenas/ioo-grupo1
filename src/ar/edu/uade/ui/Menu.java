@@ -2,6 +2,7 @@ package ar.edu.uade.ui;
 
 import ar.edu.uade.controller.PacienteController;
 import ar.edu.uade.controller.PracticaController;
+import ar.edu.uade.controller.SucursalController;
 import ar.edu.uade.controller.UsuarioController;
 import ar.edu.uade.model.Rol;
 import ar.edu.uade.ui.paciente.PacienteUI;
@@ -50,12 +51,12 @@ public class Menu {
         JMenu mnuAbm = new JMenu("ABM");
         JMenuItem mnuPacientes = new JMenuItem("Pacientes");
         JMenuItem mnuSucursales = new JMenuItem("Sucursales");
-        JMenuItem mnuUsuarios = new JMenuItem("Usuarios");
+        mnuUsuarios = new JMenuItem("Usuarios");
         JMenuItem mnuPeticiones = new JMenuItem("Peticiones");
         JMenuItem mnuPracticas = new JMenuItem("Prácticas");
 
         mnuPacientes.addActionListener(e -> mostrarPantalla(new PacienteUI(PacienteController.getInstance()).pnlPrincipal));
-        mnuSucursales.addActionListener(e -> mostrarPantalla(new SucursalUI().pnlPrincipal));
+        mnuSucursales.addActionListener(e -> mostrarPantalla(new SucursalUI(SucursalController.getInstance()).pnlPrincipal));
         mnuUsuarios.addActionListener(e -> mostrarPantalla(new UsuarioUI().pnlPrincipal));
         mnuPracticas.addActionListener(e -> mostrarPantalla(new PracticaUI(PracticaController.getInstance()).pnlPrincipal));
         mnuPeticiones.addActionListener(e -> mostrarPantalla(new PeticionUI().pnlPrincipal));

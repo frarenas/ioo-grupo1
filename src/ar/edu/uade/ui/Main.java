@@ -21,9 +21,9 @@ public class Main {
         UsuarioController.usuarioDB.put(usuario2.getDni(), usuario2);
         UsuarioController.usuarioDB.put(usuario3.getDni(), usuario3);
 
-        Sucursal sucursal1=new Sucursal(1L,"Direccion 1",usuario1);
-        Sucursal sucursal2=new Sucursal(2L,"Direccion 2",usuario2);
-        Sucursal sucursal3=new Sucursal(3L,"Direccion 3",usuario3);
+        Sucursal sucursal1=new Sucursal(1L,"Direccion 1", usuario1);
+        Sucursal sucursal2=new Sucursal(2L,"Direccion 2", usuario2);
+        Sucursal sucursal3=new Sucursal(3L,"Direccion 3", usuario3);
 
         SucursalController.sucursalDB.put(sucursal1.getNumero(), sucursal1);
         SucursalController.sucursalDB.put(sucursal2.getNumero(), sucursal2);
