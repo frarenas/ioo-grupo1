@@ -107,9 +107,6 @@ public class PacienteController {
         }else{
             return new ResultadoOperacion(false, "No se puede eliminar el paciente porque tiene peticiones finalizadas");
         }
-
-
-
     }
 
     public PacienteDTO buscarPaciente(

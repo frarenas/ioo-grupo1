@@ -26,6 +26,7 @@ public class Login extends JDialog {
         this.setResizable(false);
         this.pack();
         this.setLocationRelativeTo(owner);
+        getRootPane().setDefaultButton(btnLogin);
 
         setModal(true);
 

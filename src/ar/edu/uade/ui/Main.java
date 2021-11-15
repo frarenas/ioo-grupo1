@@ -21,9 +21,9 @@ public class Main {
         UsuarioController.usuarioDB.put(usuario2.getDni(), usuario2);
         UsuarioController.usuarioDB.put(usuario3.getDni(), usuario3);
 
-        Sucursal sucursal1=new Sucursal(1L,"Direccion 1",usuario1);
-        Sucursal sucursal2=new Sucursal(2L,"Direccion 2",usuario2);
-        Sucursal sucursal3=new Sucursal(3L,"Direccion 3",usuario3);
+        Sucursal sucursal1=new Sucursal(1L,"Direccion 1", usuario1);
+        Sucursal sucursal2=new Sucursal(2L,"Direccion 2", usuario2);
+        Sucursal sucursal3=new Sucursal(3L,"Direccion 3", usuario3);
 
         SucursalController.sucursalDB.put(sucursal1.getNumero(), sucursal1);
         SucursalController.sucursalDB.put(sucursal2.getNumero(), sucursal2);
@@ -54,8 +54,8 @@ public class Main {
         PracticaController.practicaDB.put(practica3.getCodigo(), practica3);
 
         ResultadoPeticion resultadoPeticion1 = new ResultadoPeticion(100D);
-        ResultadoPeticion resultadoPeticion2 = new ResultadoPeticion(100D);
-        ResultadoPeticion resultadoPeticion3 = new ResultadoPeticion(100D);
+        ResultadoPeticion resultadoPeticion2 = new ResultadoPeticion();
+        ResultadoPeticion resultadoPeticion3 = new ResultadoPeticion();
 
         Estudio estudio1 = new Estudio(1, practica1, resultadoPeticion1);
         Estudio estudio2 = new Estudio(2, practica2, resultadoPeticion2);
@@ -63,7 +63,7 @@ public class Main {
 
         Peticion peticion1 = new Peticion(1L, paciente1, "Obra social 1", new Date(121231331), Arrays.asList(estudio1, estudio2), new Date(121231331), sucursal1);
         Peticion peticion2 = new Peticion(2L, paciente1, "Obra social 2", new Date(121231331), Arrays.asList(estudio2, estudio3), new Date(121231331), sucursal2);
-        Peticion peticion3 = new Peticion(3L, paciente2, "Obra social 3", new Date(121231331), Arrays.asList(estudio3, estudio1), new Date(121231331), sucursal3);
+        Peticion peticion3 = new Peticion(3L, paciente2, "Obra social 3", new Date(121231331), Arrays.asList(estudio3), new Date(121231331), sucursal2);
 
         PeticionController.peticionDB.put(peticion1.getId(), peticion1);
         PeticionController.peticionDB.put(peticion2.getId(), peticion2);
