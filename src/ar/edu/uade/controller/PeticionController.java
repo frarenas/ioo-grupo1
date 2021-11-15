@@ -72,7 +72,7 @@ public class PeticionController {
         Collection<Peticion> peticiones = peticionDB.values();
         List<PeticionDTO> peticionesDni = new ArrayList<>();
         for (Peticion peticion : peticiones) {
-            if (peticion.getPaciente().getDni().equals(dni)){
+            if (peticion.getPaciente().getDni().equals(dni)) {
                 peticionesDni.add(PeticionDTO.fromEntity(peticion));
             }
         }
@@ -86,7 +86,7 @@ public class PeticionController {
         Collection<Peticion> peticiones = peticionDB.values();
         List<PeticionDTO> peticionesSucursal = new ArrayList<>();
         for (Peticion peticion : peticiones) {
-            if (peticion.getSucursal().getNumero().intValue() == numeroSucursal){
+            if (peticion.getSucursal().getNumero().intValue() == numeroSucursal) {
                 peticionesSucursal.add(PeticionDTO.fromEntity(peticion));
             }
         }
@@ -110,11 +110,14 @@ public class PeticionController {
 
         for (Peticion peticion : peticionDB.values()) {
 
-            for (Estudio estudio : peticion.getEstudios()) {
+            List<Estudio> estudios = peticion.getEstudios();
+            if (estudios != null) {
+                for (Estudio estudio : estudios) {
 
-                if (estudio.esCritico()){
-                    peticionesCriticas.add(PeticionDTO.fromEntity(peticion));
-                    break;
+                    if (estudio.esCritico()) {
+                        peticionesCriticas.add(PeticionDTO.fromEntity(peticion));
+                        break;
+                    }
                 }
             }
         }
