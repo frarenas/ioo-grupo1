@@ -25,7 +25,7 @@ public class EditarPracticaUI extends JDialog {
     private JPanel pnlPrincipal;
 
     private final EditarPracticaUI self;
-    PracticaController practicaController;
+    private final PracticaController practicaController;
 
     private PracticaDTO practicaGuardada = null;
 
@@ -54,7 +54,7 @@ public class EditarPracticaUI extends JDialog {
             txtCodigo.setEnabled(false);
             txtCodigo.setText(String.valueOf(practica.getCodigo()));
             txtNombre.setText(practica.getNombre());
-            setComboPGrupo(practica.getGrupo().getId());
+            setComboGrupo(practica.getGrupo().getId());
             txtValCriticoMin.setText(String.valueOf(practica.getValorCriticoMin()));
             txtValCriticoMax.setText(String.valueOf(practica.getValorCriticoMax()));
             chkReservado.setSelected(practica.getValorReservado());
@@ -106,7 +106,7 @@ public class EditarPracticaUI extends JDialog {
         self.dispose();
     }
 
-    private void setComboPGrupo(Long idGrupo) {
+    private void setComboGrupo(Long idGrupo) {
         for (int i = 0; i < cbGrupo.getItemCount(); i++) {
             if(Objects.equals(cbGrupo.getItemAt(i).getId(), idGrupo)) {
                 cbGrupo.setSelectedIndex(i);

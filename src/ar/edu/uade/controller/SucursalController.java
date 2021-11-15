@@ -1,16 +1,15 @@
 package ar.edu.uade.controller;
 
+import ar.edu.uade.model.ResultadoOperacion;
 import ar.edu.uade.model.Sucursal;
 import ar.edu.uade.model.Usuario;
-import ar.edu.uade.model.dto.EstudioDTO;
-import ar.edu.uade.model.dto.PeticionDTO;
-import ar.edu.uade.model.dto.SucursalDTO;
-import ar.edu.uade.model.dto.UsuarioDTO;
+import ar.edu.uade.model.dto.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SucursalController {
 
@@ -36,6 +35,12 @@ public class SucursalController {
         sucursalDB.put(numero, sucursal);
     }
 
+    public void altaSucursal(
+            SucursalDTO sucursalDTO
+    ) {
+        altaSucursal(sucursalDTO.getNumero(), sucursalDTO.getDireccion(), sucursalDTO.getResponsableTecnico());
+    }
+
     public void modificarSucursal(
             long numero,
             String direccion,
@@ -49,31 +54,38 @@ public class SucursalController {
         sucursalDB.put(numero, sucursal);
     }
 
-    public String bajaSucursal(long numero, SucursalDTO sucursalDestino) {
-        PeticionController peticionController = PeticionController.getInstance();
-        boolean peticionesFinalizadas = false;
+    public void modificarSucursal(
+            SucursalDTO sucursalDTO
+    ) {
+        modificarSucursal(sucursalDTO.getNumero(), sucursalDTO.getDireccion(), sucursalDTO.getResponsableTecnico());
+    }
 
+    public ResultadoOperacion bajaSucursal(long numero){
+        PeticionController peticionController = PeticionController.getInstance();
+        List<PeticionDTO> peticiones = peticionController.buscarPeticionesPorSucursal(numero);
+
+        if(peticiones.size() == 0){
+            sucursalDB.remove(numero);
+            return new ResultadoOperacion(true, "Se elimino la sucursal correctamente");
+        }else {
+            List<PeticionDTO> peticionesFinalizadas = peticiones.stream()
+                    .filter(pet -> pet.getEstudios().stream().anyMatch(est -> est.getResultadoPeticion().getResultado() != null))
+                    .collect(Collectors.toList());
+            if (peticionesFinalizadas.size() > 0) {
+                return new ResultadoOperacion(false, "No se puede eliminar la sucursal porque tiene peticiones finalizadas");
+            }else{
+                return new ResultadoOperacion(false, "DERIVAR");
+            }
+        }
+    }
+
+    public void bajaSucursal(long numero, SucursalDTO sucursalDestino) {
+        PeticionController peticionController = PeticionController.getInstance();
         List<PeticionDTO> peticionDTOS = peticionController.buscarPeticionesPorSucursal(numero);
 
-        for (PeticionDTO peticionDTO: peticionDTOS) {
+        peticionController.derivarPeticiones(peticionDTOS, sucursalDestino);
 
-            for (EstudioDTO estudioDTO: peticionDTO.getEstudios()) {
-                if (estudioDTO.getResultadoPeticion() != null){
-                    peticionesFinalizadas = true;
-                    break;
-                }
-            }
-            if (peticionesFinalizadas)
-                break;
-        }
-        if (!peticionesFinalizadas){
-            peticionController.derivarPeticiones(peticionDTOS, sucursalDestino);
-
-            sucursalDB.remove(numero);
-            return "Se elimino la sucursal correctamente";
-        }else{
-            return "No se puede eliminar la sucursal porque tiene peticiones finalizadas";
-        }
+        sucursalDB.remove(numero);
     }
 
     //TODO: Esto no está en el diagrama de clases. ¿Hay que incluirlo?
@@ -84,5 +96,9 @@ public class SucursalController {
     public SucursalDTO buscarSucursal(long numero) {
         Sucursal sucursal = sucursalDB.get(numero);
         return SucursalDTO.fromEntity(sucursal);
+    }
+
+    public List<SucursalDTO> getSucursales() {
+        return SucursalDTO.fromEntities(new ArrayList<>(sucursalDB.values()));
     }
 }
