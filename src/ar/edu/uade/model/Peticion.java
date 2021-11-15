@@ -31,7 +31,7 @@ public class Peticion {
         this.paciente = new Paciente(peticionDTO.getPaciente());
         this.obraSocial = peticionDTO.getObraSocial();
         this.fechaCarga = peticionDTO.getFechaCarga();
-        this.estudios = peticionDTO.getEstudios().stream().map(Estudio::new).collect(Collectors.toList());
+        this.estudios = peticionDTO.getEstudios() != null ? peticionDTO.getEstudios().stream().map(Estudio::new).collect(Collectors.toList()) : null;
         this.fechaEntrega = peticionDTO.getFechaEntrega();
         this.sucursal = new Sucursal(peticionDTO.getSucursal());
     }

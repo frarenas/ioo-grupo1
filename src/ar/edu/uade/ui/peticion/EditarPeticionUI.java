@@ -29,6 +29,7 @@ public class EditarPeticionUI extends JDialog {
     private JPanel pnlPrincipal;
 
     private EditarPeticionUI self;
+    private PeticionDTO peticionGuardada = null;
     private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public EditarPeticionUI(Window owner, PeticionDTO peticionDto) {
@@ -107,7 +108,7 @@ public class EditarPeticionUI extends JDialog {
                     txtFechaEntrega.getText().trim().isEmpty()) {
                 showMessageDialog(null, "Debe completar todos los campos para continuar");
             } else {
-                peticionController.altaPeticion(
+                peticionGuardada = peticionController.altaPeticion(
                         Long.parseLong(txtId.getText()),
                         pacienteDto,
                         txtObraSocial.getText(),
@@ -129,5 +130,10 @@ public class EditarPeticionUI extends JDialog {
             showMessageDialog(null, "El formato de fecha no es válido");
         }
         return dateParsed;
+    }
+
+    public PeticionDTO showDialog() {
+        setVisible(true);
+        return peticionGuardada;
     }
 }

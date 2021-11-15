@@ -2,6 +2,7 @@ package ar.edu.uade.ui.peticion;
 
 import ar.edu.uade.controller.PeticionController;
 import ar.edu.uade.model.Peticion;
+import ar.edu.uade.model.dto.PeticionDTO;
 import ar.edu.uade.util.JTableButtonMouseListener;
 import ar.edu.uade.util.JTableButtonRenderer;
 
@@ -35,7 +36,11 @@ public class PeticionUI {
                     JOptionPane.getFrameForComponent(pnlPrincipal),
                     null
             );
-            editarPeticionUI.setVisible(true);
+            PeticionDTO peticionDto = editarPeticionUI.showDialog();
+            if (peticionDto != null){
+                peticionTableModel.actualizarTabla(peticionDto);
+            }
+
         });
 
         //Listar peticiones criticas

@@ -86,7 +86,7 @@ public class PeticionDTO {
                 PacienteDTO.fromEntity(peticion.getPaciente()),
                 peticion.getObraSocial(),
                 peticion.getFechaCarga(),
-                EstudioDTO.fromEntities(peticion.getEstudios()),
+                peticion.getEstudios()!=null? EstudioDTO.fromEntities(peticion.getEstudios()):null,
                 peticion.getFechaEntrega(),
                 SucursalDTO.fromEntity(peticion.getSucursal())
         );

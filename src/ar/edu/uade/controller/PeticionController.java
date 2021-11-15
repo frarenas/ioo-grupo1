@@ -27,7 +27,7 @@ public class PeticionController {
         return instance;
     }
 
-    public void altaPeticion(
+    public PeticionDTO altaPeticion(
             Long id,
             PacienteDTO paciente,
             String obraSocial,
@@ -37,6 +37,7 @@ public class PeticionController {
     ) {
         Peticion peticion = new Peticion(id, new Paciente(paciente), obraSocial, fechaCarga, null, fechaEntrega, new Sucursal(sucursal));
         peticionDB.put(id, peticion);
+        return PeticionDTO.fromEntity(peticion);
     }
 
     public void modificarPeticion(

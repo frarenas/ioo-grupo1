@@ -70,18 +70,11 @@ public class PeticionTableModel extends AbstractTableModel {
                     JOptionPane.getFrameForComponent(button),
                     PeticionDTO.fromEntity(peticiones.get(rowIndex))
             );
-            editarPeticionUI.setVisible(true);
-        });
-        return button;
-    }
-
-    private JButton setBotonPeticionesCriticas(String nombre, int rowIndex) {
-        final JButton button = new JButton(nombre);
-        button.addActionListener(e -> {
-            PeticionesCriticasUI peticionesCriticasUI = new PeticionesCriticasUI(
-                    JOptionPane.getFrameForComponent(button)
-            );
-            peticionesCriticasUI.setVisible(true);
+            PeticionDTO peticionGuardada = editarPeticionUI.showDialog();
+            if (peticionGuardada != null){
+                peticiones.set(rowIndex, new Peticion(peticionGuardada));
+                fireTableDataChanged();
+            }
         });
         return button;
     }
@@ -95,5 +88,11 @@ public class PeticionTableModel extends AbstractTableModel {
             fireTableDataChanged();
         });
         return button;
+    }
+
+
+    public void actualizarTabla(PeticionDTO peticionDTO){
+        this.peticiones.add(new Peticion(peticionDTO));
+        fireTableDataChanged();
     }
 }
