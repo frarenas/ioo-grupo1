@@ -53,9 +53,9 @@ public class Main {
         PracticaController.practicaDB.put(practica2.getCodigo(), practica2);
         PracticaController.practicaDB.put(practica3.getCodigo(), practica3);
 
-        ResultadoPeticion resultadoPeticion1 = new ResultadoPeticion(100D);
+        ResultadoPeticion resultadoPeticion1 = new ResultadoPeticion(50D);
         ResultadoPeticion resultadoPeticion2 = new ResultadoPeticion(100D);
-        ResultadoPeticion resultadoPeticion3 = new ResultadoPeticion(100D);
+        ResultadoPeticion resultadoPeticion3 = new ResultadoPeticion(500D);
 
         Estudio estudio1 = new Estudio(1, practica1, resultadoPeticion1);
         Estudio estudio2 = new Estudio(2, practica2, resultadoPeticion2);

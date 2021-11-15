@@ -41,7 +41,6 @@ public class EditarUsuarioUI extends JDialog {
             self = this;
 
             this.setContentPane(pnlPrincipalUsuario);
-            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             this.setResizable(false);
             this.setLocationRelativeTo(owner);
             this.pack();

@@ -14,6 +14,7 @@ public class PeticionUI {
     public JPanel pnlPrincipal;
     private JTable tblPeticiones;
     private JButton btnAgregar;
+    private JButton btnListarCriticos;
 
     public PeticionUI() {
 
@@ -35,6 +36,14 @@ public class PeticionUI {
                     null
             );
             editarPeticionUI.setVisible(true);
+        });
+
+        //Listar peticiones criticas
+        btnListarCriticos.addActionListener(e -> {
+            PeticionesCriticasUI peticionesCriticasUI = new PeticionesCriticasUI(
+                    JOptionPane.getFrameForComponent(pnlPrincipal)
+            );
+            peticionesCriticasUI.setVisible(true);
         });
     }
 

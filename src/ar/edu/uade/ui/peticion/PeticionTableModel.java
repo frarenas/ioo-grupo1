@@ -13,8 +13,8 @@ import java.util.List;
 public class PeticionTableModel extends AbstractTableModel {
 
     private final List<Peticion> peticiones;
-    protected String[] columnNames = new String[]{"Id", "Paciente", "Obra social", "Fecha carga", "Estudios", "Fecha entrega", "Sucursal", "Editar", "Eliminar"};
-    protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
+    protected String[] columnNames = new String[]{"Id", "Paciente", "Obra social", "Fecha carga", "Fecha entrega", "Sucursal","Editar", "Eliminar"};
+    protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
     private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public PeticionTableModel(List<Peticion> peticiones) {
@@ -51,14 +51,12 @@ public class PeticionTableModel extends AbstractTableModel {
             case 3:
                 return dateFormat.format(peticiones.get(rowIndex).getFechaCarga());
             case 4:
-                return peticiones.get(rowIndex).getEstudios();
-            case 5:
                 return dateFormat.format(peticiones.get(rowIndex).getFechaEntrega());
-            case 6:
+            case 5:
                 return peticiones.get(rowIndex).getSucursal().getNumero();
-            case 7:
+            case 6:
                 return setBotonEditar(getColumnName(columnIndex), rowIndex);
-            case 8:
+            case 7:
                 return setBotonEliminar(getColumnName(columnIndex), rowIndex);
             default:
                 return null;
@@ -73,6 +71,17 @@ public class PeticionTableModel extends AbstractTableModel {
                     PeticionDTO.fromEntity(peticiones.get(rowIndex))
             );
             editarPeticionUI.setVisible(true);
+        });
+        return button;
+    }
+
+    private JButton setBotonPeticionesCriticas(String nombre, int rowIndex) {
+        final JButton button = new JButton(nombre);
+        button.addActionListener(e -> {
+            PeticionesCriticasUI peticionesCriticasUI = new PeticionesCriticasUI(
+                    JOptionPane.getFrameForComponent(button)
+            );
+            peticionesCriticasUI.setVisible(true);
         });
         return button;
     }

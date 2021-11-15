@@ -37,7 +37,6 @@ public class EditarPeticionUI extends JDialog {
             self = this;
 
             this.setContentPane(pnlPrincipal);
-            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             this.setResizable(false);
             this.setLocationRelativeTo(owner);
             this.pack();
