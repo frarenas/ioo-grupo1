@@ -69,7 +69,7 @@ public class SucursalController {
             return new ResultadoOperacion(true, "Se elimino la sucursal correctamente");
         }else {
             List<PeticionDTO> peticionesFinalizadas = peticiones.stream()
-                    .filter(pet -> pet.getEstudios().stream().anyMatch(est -> est.getResultadoPeticion().getResultado() != null))
+                    .filter(pet -> pet.getEstudios() != null && pet.getEstudios().stream().anyMatch(est -> est.getResultadoPeticion().getResultado() != null))
                     .collect(Collectors.toList());
             if (peticionesFinalizadas.size() > 0) {
                 return new ResultadoOperacion(false, "No se puede eliminar la sucursal porque tiene peticiones finalizadas");
