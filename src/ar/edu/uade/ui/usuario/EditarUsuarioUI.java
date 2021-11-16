@@ -2,7 +2,6 @@ package ar.edu.uade.ui.usuario;
 
 import ar.edu.uade.controller.UsuarioController;
 import ar.edu.uade.model.Rol;
-import ar.edu.uade.model.dto.PracticaDTO;
 import ar.edu.uade.model.dto.UsuarioDTO;
 
 import javax.swing.*;
@@ -26,11 +25,11 @@ public class EditarUsuarioUI extends JDialog {
     private JTextField txtDomicilio;
     private JFormattedTextField txtDNI;
     private JFormattedTextField txtFechaNacimiento;
-    private JComboBox txtRol;
+    private JComboBox<Rol> txtRol;
 
     private JButton btnCancelar;
     private JButton btnGuardar;
-    private JPanel pnlPrincipalUsuario;
+    private JPanel pnlPrincipal;
 
     private EditarUsuarioUI self;
     private UsuarioDTO usuarioGuardado = null;
@@ -39,13 +38,6 @@ public class EditarUsuarioUI extends JDialog {
         super(owner, usuarioDTO == null ? "Nuevo Usuario" : "Editar Usuario");
         try {
             self = this;
-
-            this.setContentPane(pnlPrincipalUsuario);
-            this.setResizable(false);
-            this.setLocationRelativeTo(owner);
-            this.pack();
-            this.setModal(true);
-            this.setActions();
 
             MaskFormatter maskFechaNacimiento = new MaskFormatter("##/##/####");
             maskFechaNacimiento.install(txtFechaNacimiento);
@@ -63,6 +55,15 @@ public class EditarUsuarioUI extends JDialog {
                 guardarUsuario();
                 self.dispose();
             });
+
+            btnCancelar.addActionListener(e -> self.dispose());
+
+            pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            this.setContentPane(pnlPrincipal);
+            this.setResizable(false);
+            this.pack();
+            this.setLocationRelativeTo(owner);
+            this.setModal(true);
         } catch (ParseException e) {
             e.printStackTrace();
             showMessageDialog(null, "Error al construir el componente");
@@ -85,12 +86,6 @@ public class EditarUsuarioUI extends JDialog {
         txtRol.addItem(Rol.ADMINISTRADOR);
         txtRol.addItem(Rol.LABORISTA);
         txtRol.addItem(Rol.RECEPCION);
-    }
-
-    private void setActions() {
-        btnCancelar.addActionListener(e -> {
-            self.dispose();
-        });
     }
 
     private void guardarUsuario() {

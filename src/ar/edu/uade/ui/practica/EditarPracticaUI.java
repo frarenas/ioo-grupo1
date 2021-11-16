@@ -35,16 +35,6 @@ public class EditarPracticaUI extends JDialog {
         self = this;
         this.practicaController = practicaController;
 
-        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        this.setContentPane(pnlPrincipal);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(owner);
-
-        setModal(true);
-
         List<GrupoPracticaDTO> gruposPracticas = practicaController.getGruposPractica();
         for(GrupoPracticaDTO grupoPracticaDTO: gruposPracticas){
             cbGrupo.addItem(grupoPracticaDTO);
@@ -63,8 +53,15 @@ public class EditarPracticaUI extends JDialog {
         }
 
         btnGuardar.addActionListener(e -> guardarPractica(practica));
-
         btnCancelar.addActionListener(e -> self.dispose());
+
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.setContentPane(pnlPrincipal);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setResizable(false);
+        this.pack();
+        this.setLocationRelativeTo(owner);
+        setModal(true);
     }
 
     public PracticaDTO showDialog() {

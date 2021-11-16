@@ -19,7 +19,6 @@ public class EditarSucursalUI extends JDialog {
     private JTextField txtDireccion;
     private JComboBox<UsuarioDTO> cbResponsableTecnico;
     private JTextField txtNumero;
-    private JPanel pnlCampos;
 
     private final EditarSucursalUI self;
     private final SucursalController sucursalController;
@@ -31,16 +30,6 @@ public class EditarSucursalUI extends JDialog {
 
         self = this;
         this.sucursalController = sucursalController;
-
-        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        this.setContentPane(pnlPrincipal);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(owner);
-
-        setModal(true);
 
         UsuarioController usuarioController = UsuarioController.getInstance();
         List<UsuarioDTO> usuarios = usuarioController.listarUsuarios();
@@ -57,8 +46,15 @@ public class EditarSucursalUI extends JDialog {
         }
 
         btnCancelar.addActionListener(e -> self.dispose());
-
         btnGuardar.addActionListener(e -> guardarSucursal(sucursal));
+
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.setContentPane(pnlPrincipal);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setResizable(false);
+        this.pack();
+        this.setLocationRelativeTo(owner);
+        setModal(true);
     }
 
     public SucursalDTO showDialog() {
@@ -96,10 +92,6 @@ public class EditarSucursalUI extends JDialog {
             showMessageDialog(null, "No pudimos reconocer el número de sucursal.");
             return false;
         }
-        /*if(sucursalController.buscarSucursal(Long.parseLong(txtNumero.getText())) != null) {
-            showMessageDialog(null, "El número de sucursal ingresado le pertenece a otra sucursal.");
-            return false;
-        }*/
         if(txtDireccion.getText().isEmpty()) {
             showMessageDialog(null, "No pudimos reconocer la dirección ingresada.");
             return false;

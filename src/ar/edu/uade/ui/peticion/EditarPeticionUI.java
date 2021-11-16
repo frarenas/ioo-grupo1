@@ -40,14 +40,6 @@ public class EditarPeticionUI extends JDialog {
         self = this;
         this.peticionController = peticionController;
 
-        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        this.setContentPane(pnlPrincipal);
-        this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(owner);
-        this.setModal(true);
-
         try {
             String DATE_MASK = "##/##/####";
             MaskFormatter maskFechaCarga = new MaskFormatter(DATE_MASK);
@@ -68,8 +60,14 @@ public class EditarPeticionUI extends JDialog {
         }
 
         btnGuardar.addActionListener(e -> guardarPeticion(peticionDto));
-
         btnCancelar.addActionListener(e -> self.dispose());
+
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.setContentPane(pnlPrincipal);
+        this.setResizable(false);
+        this.pack();
+        this.setLocationRelativeTo(owner);
+        this.setModal(true);
     }
 
     private void cargarFormulario(PeticionDTO peticionDto) {
