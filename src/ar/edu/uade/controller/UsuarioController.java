@@ -85,4 +85,8 @@ public class UsuarioController {
             return new ResultadoOperacion(false, "Usuario o contraseña incorrecta.");
         }
     }
+
+    public void logout() {
+        usuarioLogueado = null;
+    }
 }
