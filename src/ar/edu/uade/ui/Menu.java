@@ -35,28 +35,7 @@ public class Menu {
 
         rootFrame.setVisible(true);
 
-        Login login = new Login(this.rootFrame, "Login");
-        login.setVisible(true);
-        login.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                switch (UsuarioController.usuarioLogueado.getRol()) {
-                    case RECEPCION:
-                        mnuUsuarios.setVisible(false);
-                        mnuPracticas.setVisible(false);
-                        mnuSucursales.setVisible(false);
-                        return;
-                    case LABORISTA:
-                        mnuUsuarios.setVisible(false);
-                        mnuPracticas.setVisible(false);
-                        mnuSucursales.setVisible(false);
-                        mnuPacientes.setVisible(false);
-                        return;
-                    default:
-                        return;
-                }
-            }
-        });
+        login();
     }
 
     private JMenuBar setMenu() {
@@ -82,11 +61,47 @@ public class Menu {
 
         mb.add(mnuAbm);
 
+        JMenuItem mnuLogout = new JMenuItem("Cerrar sesión");
+        mnuLogout.addActionListener(e -> login());
+        mb.add(mnuLogout);
+
         return mb;
     }
 
     private void mostrarPantalla(JPanel panel) {
         rootFrame.setContentPane(panel);
+    }
+
+    private void login() {
+        mostrarPantalla(pnlPrincipal);
+        rootFrame.setVisible(true);
+        UsuarioController.getInstance().logout();
+
+        Login login = new Login(this.rootFrame, "Login");
+        login.setVisible(true);
+        login.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                switch (UsuarioController.usuarioLogueado.getRol()) {
+                    case RECEPCION:
+                        mnuUsuarios.setVisible(false);
+                        mnuPracticas.setVisible(false);
+                        mnuSucursales.setVisible(false);
+                        return;
+                    case LABORISTA:
+                        mnuUsuarios.setVisible(false);
+                        mnuPracticas.setVisible(false);
+                        mnuSucursales.setVisible(false);
+                        mnuPacientes.setVisible(false);
+                        return;
+                    case ADMINISTRADOR:
+                        mnuUsuarios.setVisible(true);
+                        mnuPracticas.setVisible(true);
+                        mnuSucursales.setVisible(true);
+                        mnuPacientes.setVisible(true);
+                }
+            }
+        });
     }
 
 }
