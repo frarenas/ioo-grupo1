@@ -1,7 +1,6 @@
 package ar.edu.uade.ui;
 
 import ar.edu.uade.controller.*;
-import ar.edu.uade.model.Rol;
 import ar.edu.uade.ui.paciente.PacienteUI;
 import ar.edu.uade.ui.sucursal.SucursalUI;
 import ar.edu.uade.ui.practica.PracticaUI;
@@ -18,6 +17,9 @@ public class Menu {
     private JPanel pnlPrincipal;
 
     private JMenuItem mnuUsuarios;
+    private JMenuItem mnuSucursales;
+    private JMenuItem mnuPracticas;
+    private JMenuItem mnuPacientes;
 
     public Menu() {
         rootFrame = new JFrame("Laboratorio");
@@ -38,7 +40,21 @@ public class Menu {
         login.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                mnuUsuarios.setVisible(UsuarioController.usuarioLogueado.getRol() == Rol.ADMINISTRADOR);
+                switch (UsuarioController.usuarioLogueado.getRol()) {
+                    case RECEPCION:
+                        mnuUsuarios.setVisible(false);
+                        mnuPracticas.setVisible(false);
+                        mnuSucursales.setVisible(false);
+                        return;
+                    case LABORISTA:
+                        mnuUsuarios.setVisible(false);
+                        mnuPracticas.setVisible(false);
+                        mnuSucursales.setVisible(false);
+                        mnuPacientes.setVisible(false);
+                        return;
+                    default:
+                        return;
+                }
             }
         });
     }
@@ -46,11 +62,11 @@ public class Menu {
     private JMenuBar setMenu() {
         JMenuBar mb = new JMenuBar();
         JMenu mnuAbm = new JMenu("ABM");
-        JMenuItem mnuPacientes = new JMenuItem("Pacientes");
-        JMenuItem mnuSucursales = new JMenuItem("Sucursales");
+        mnuPacientes = new JMenuItem("Pacientes");
+        mnuSucursales = new JMenuItem("Sucursales");
         mnuUsuarios = new JMenuItem("Usuarios");
         JMenuItem mnuPeticiones = new JMenuItem("Peticiones");
-        JMenuItem mnuPracticas = new JMenuItem("Prácticas");
+        mnuPracticas = new JMenuItem("Prácticas");
 
         mnuPacientes.addActionListener(e -> mostrarPantalla(new PacienteUI(PacienteController.getInstance()).pnlPrincipal));
         mnuSucursales.addActionListener(e -> mostrarPantalla(new SucursalUI(SucursalController.getInstance()).pnlPrincipal));

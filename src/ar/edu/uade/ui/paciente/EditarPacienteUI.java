@@ -30,18 +30,6 @@ public class EditarPacienteUI extends JDialog {
         self = this;
         this.pacienteController = pacienteController;
 
-        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        this.setContentPane(pnlPrincipal);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(owner);
-
-        setModal(true);
-
-
-
         cbSexo.addItem(Sexo.FEMENINO);
         cbSexo.addItem(Sexo.MASCULINO);
         cbSexo.addItem(Sexo.OTRO);
@@ -57,8 +45,15 @@ public class EditarPacienteUI extends JDialog {
         }
 
         btnGuardar.addActionListener(e -> guardarPaciente(paciente));
-
         btnCancelar.addActionListener(e -> self.dispose());
+
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.setContentPane(pnlPrincipal);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setResizable(false);
+        this.pack();
+        this.setLocationRelativeTo(owner);
+        setModal(true);
     }
 
     public PacienteDTO showDialog() {
