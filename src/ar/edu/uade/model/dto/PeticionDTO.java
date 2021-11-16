@@ -4,6 +4,7 @@ import ar.edu.uade.model.Peticion;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PeticionDTO {
     private Long id;
@@ -90,5 +91,9 @@ public class PeticionDTO {
                 peticion.getFechaEntrega(),
                 SucursalDTO.fromEntity(peticion.getSucursal())
         );
+    }
+
+    public static List<PeticionDTO> fromEntities(List<Peticion> peticiones) {
+        return peticiones.stream().map(PeticionDTO::fromEntity).collect(Collectors.toList());
     }
 }

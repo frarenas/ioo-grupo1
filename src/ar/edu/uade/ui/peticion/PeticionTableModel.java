@@ -1,7 +1,6 @@
 package ar.edu.uade.ui.peticion;
 
 import ar.edu.uade.controller.PeticionController;
-import ar.edu.uade.model.Peticion;
 import ar.edu.uade.model.dto.PeticionDTO;
 
 import javax.swing.*;
@@ -12,12 +11,15 @@ import java.util.List;
 
 public class PeticionTableModel extends AbstractTableModel {
 
-    private final List<Peticion> peticiones;
+    private final PeticionController peticionController;
+
+    private final List<PeticionDTO> peticiones;
     protected String[] columnNames = new String[]{"Id", "Paciente", "Obra social", "Fecha carga", "Fecha entrega", "Sucursal","Editar", "Eliminar"};
     protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
     private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    public PeticionTableModel(List<Peticion> peticiones) {
+    public PeticionTableModel(PeticionController peticionController,List<PeticionDTO> peticiones) {
+        this.peticionController = peticionController;
         this.peticiones = peticiones;
     }
 
@@ -68,11 +70,12 @@ public class PeticionTableModel extends AbstractTableModel {
         button.addActionListener(e -> {
             EditarPeticionUI editarPeticionUI = new EditarPeticionUI(
                     JOptionPane.getFrameForComponent(button),
-                    PeticionDTO.fromEntity(peticiones.get(rowIndex))
+                    peticionController,
+                    peticiones.get(rowIndex)
             );
             PeticionDTO peticionGuardada = editarPeticionUI.showDialog();
             if (peticionGuardada != null){
-                peticiones.set(rowIndex, new Peticion(peticionGuardada));
+                peticiones.set(rowIndex, peticionGuardada);
                 fireTableDataChanged();
             }
         });
@@ -82,7 +85,6 @@ public class PeticionTableModel extends AbstractTableModel {
     private JButton setBotonEliminar(String nombre, int rowIndex) {
         final JButton button = new JButton(nombre);
         button.addActionListener(e -> {
-            PeticionController peticionController = PeticionController.getInstance();
             peticionController.bajaPeticion(peticiones.get(rowIndex).getId());
             peticiones.remove(rowIndex);
             fireTableDataChanged();
@@ -92,7 +94,7 @@ public class PeticionTableModel extends AbstractTableModel {
 
 
     public void actualizarTabla(PeticionDTO peticionDTO){
-        this.peticiones.add(new Peticion(peticionDTO));
+        this.peticiones.add(peticionDTO);
         fireTableDataChanged();
     }
 }

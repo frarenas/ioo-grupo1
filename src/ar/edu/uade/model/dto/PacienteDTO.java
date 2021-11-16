@@ -85,4 +85,9 @@ public class PacienteDTO {
     public static List<PacienteDTO> fromEntities(List<Paciente> pacientes) {
         return pacientes.stream().map(PacienteDTO::fromEntity).collect(Collectors.toList());
     }
+
+    @Override
+    public String toString() {
+        return  nombre + " - DNI: " + dni;
+    }
 }

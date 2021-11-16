@@ -1,14 +1,12 @@
 package ar.edu.uade.ui.peticion;
 
 import ar.edu.uade.controller.PeticionController;
-import ar.edu.uade.model.Peticion;
 import ar.edu.uade.model.dto.PeticionDTO;
 import ar.edu.uade.util.JTableButtonMouseListener;
 import ar.edu.uade.util.JTableButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PeticionUI {
@@ -17,11 +15,11 @@ public class PeticionUI {
     private JButton btnAgregar;
     private JButton btnListarCriticos;
 
-    public PeticionUI() {
+    public PeticionUI(PeticionController peticionController) {
 
         //Datos tabla
-        List<Peticion> peticiones = new ArrayList<>(PeticionController.peticionDB.values());
-        PeticionTableModel peticionTableModel = new PeticionTableModel(peticiones);
+        List<PeticionDTO> peticiones = peticionController.getPeticiones();
+        PeticionTableModel peticionTableModel = new PeticionTableModel(peticionController, peticiones);
         tblPeticiones.setModel(peticionTableModel);
 
         //Botones tabla
@@ -34,6 +32,7 @@ public class PeticionUI {
         btnAgregar.addActionListener(e -> {
             EditarPeticionUI editarPeticionUI = new EditarPeticionUI(
                     JOptionPane.getFrameForComponent(pnlPrincipal),
+                    peticionController,
                     null
             );
             PeticionDTO peticionDto = editarPeticionUI.showDialog();
