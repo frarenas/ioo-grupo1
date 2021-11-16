@@ -32,7 +32,7 @@ public class PeticionController {
             Date fechaEntrega,
             SucursalDTO sucursal
     ) {
-        Peticion peticion = new Peticion(id, new Paciente(paciente), obraSocial, fechaCarga, null, fechaEntrega, new Sucursal(sucursal));
+        Peticion peticion = new Peticion(id, new Paciente(paciente), obraSocial, fechaCarga, new ArrayList<>(), fechaEntrega, new Sucursal(sucursal));
         peticionDB.put(id, peticion);
         return PeticionDTO.fromEntity(peticion);
     }

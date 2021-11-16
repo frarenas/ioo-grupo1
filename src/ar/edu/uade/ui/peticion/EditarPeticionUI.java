@@ -13,6 +13,7 @@ import java.awt.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -114,7 +115,7 @@ public class EditarPeticionUI extends JDialog {
                         (PacienteDTO) cbPaciente.getSelectedItem(),
                         txtObraSocial.getText(),
                         obtenerFecha(txtFechaCarga),
-                        null,
+                        new ArrayList<>(),
                         obtenerFecha(txtFechaEntrega),
                         (SucursalDTO) cbSucursal.getSelectedItem()
                 );

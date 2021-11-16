@@ -24,6 +24,7 @@ public class PeticionUI {
 
         //Botones tabla
         TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        tblPeticiones.getColumn("Resultados").setCellRenderer(buttonRenderer);
         tblPeticiones.getColumn("Editar").setCellRenderer(buttonRenderer);
         tblPeticiones.getColumn("Eliminar").setCellRenderer(buttonRenderer);
         tblPeticiones.addMouseListener(new JTableButtonMouseListener(tblPeticiones));
