@@ -25,10 +25,10 @@ public class PeticionesCriticasUI extends JDialog {
 
         this.setContentPane(pnlPrincipal);
         this.setResizable(false);
-        this.setLocationRelativeTo(owner);
         this.pack();
         this.setModal(true);
         this.setSize(new Dimension(700, 300));
+        this.setLocationRelativeTo(owner);
 
         String[] columns = {"Id", "DNI", "Obra social", "Fecha carga", "Fecha entrega", "Nro sucursal"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);

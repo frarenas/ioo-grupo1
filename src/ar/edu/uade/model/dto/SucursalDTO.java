@@ -51,4 +51,8 @@ public class SucursalDTO {
     public static List<SucursalDTO> fromEntities(List<Sucursal> sucursales) {
         return sucursales.stream().map(SucursalDTO::fromEntity).collect(Collectors.toList());
     }
+
+    public String toString() {
+        return  numero + " - " + direccion;
+    }
 }

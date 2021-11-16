@@ -1,9 +1,6 @@
 package ar.edu.uade.ui;
 
-import ar.edu.uade.controller.PacienteController;
-import ar.edu.uade.controller.PracticaController;
-import ar.edu.uade.controller.SucursalController;
-import ar.edu.uade.controller.UsuarioController;
+import ar.edu.uade.controller.*;
 import ar.edu.uade.model.Rol;
 import ar.edu.uade.ui.paciente.PacienteUI;
 import ar.edu.uade.ui.sucursal.SucursalUI;
@@ -59,7 +56,7 @@ public class Menu {
         mnuSucursales.addActionListener(e -> mostrarPantalla(new SucursalUI(SucursalController.getInstance()).pnlPrincipal));
         mnuUsuarios.addActionListener(e -> mostrarPantalla(new UsuarioUI().pnlPrincipal));
         mnuPracticas.addActionListener(e -> mostrarPantalla(new PracticaUI(PracticaController.getInstance()).pnlPrincipal));
-        mnuPeticiones.addActionListener(e -> mostrarPantalla(new PeticionUI().pnlPrincipal));
+        mnuPeticiones.addActionListener(e -> mostrarPantalla(new PeticionUI(PeticionController.getInstance()).pnlPrincipal));
 
         mnuAbm.add(mnuPacientes);
         mnuAbm.add(mnuSucursales);

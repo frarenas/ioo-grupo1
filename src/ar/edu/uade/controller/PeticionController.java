@@ -4,10 +4,7 @@ import ar.edu.uade.model.Estudio;
 import ar.edu.uade.model.Paciente;
 import ar.edu.uade.model.Peticion;
 import ar.edu.uade.model.Sucursal;
-import ar.edu.uade.model.dto.EstudioDTO;
-import ar.edu.uade.model.dto.PacienteDTO;
-import ar.edu.uade.model.dto.PeticionDTO;
-import ar.edu.uade.model.dto.SucursalDTO;
+import ar.edu.uade.model.dto.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,14 +37,27 @@ public class PeticionController {
         return PeticionDTO.fromEntity(peticion);
     }
 
+    public PeticionDTO altaPeticion(
+            PeticionDTO peticionDTO
+    ) {
+        return altaPeticion(
+                peticionDTO.getId(),
+                peticionDTO.getPaciente(),
+                peticionDTO.getObraSocial(),
+                peticionDTO.getFechaCarga(),
+                peticionDTO.getFechaEntrega(),
+                peticionDTO.getSucursal()
+        );
+    }
+
     public void modificarPeticion(
             Long id,
             PacienteDTO paciente,
             String obraSocial,
             Date fechaCarga,
-            List<EstudioDTO> estudioDtos,
             Date fechaEntrega,
-            SucursalDTO sucursal
+            SucursalDTO sucursal,
+            List<EstudioDTO> estudioDtos
     ) {
         List<Estudio> estudios = estudioDtos.stream().map(Estudio::new).collect(Collectors.toList());
 
@@ -59,6 +69,20 @@ public class PeticionController {
         peticion.setFechaEntrega(fechaEntrega);
         peticion.setSucursal(new Sucursal(sucursal));
         peticionDB.put(id, peticion);
+    }
+
+    public void modificarPeticion(
+            PeticionDTO peticionDTO
+    ) {
+        modificarPeticion(
+                peticionDTO.getId(),
+                peticionDTO.getPaciente(),
+                peticionDTO.getObraSocial(),
+                peticionDTO.getFechaCarga(),
+                peticionDTO.getFechaEntrega(),
+                peticionDTO.getSucursal(),
+                peticionDTO.getEstudios()
+        );
     }
 
     public void bajaPeticion(
@@ -123,5 +147,9 @@ public class PeticionController {
             }
         }
         return peticionesCriticas;
+    }
+
+    public List<PeticionDTO> getPeticiones() {
+        return PeticionDTO.fromEntities(new ArrayList<>(peticionDB.values()));
     }
 }
