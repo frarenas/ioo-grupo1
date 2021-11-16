@@ -2,6 +2,7 @@ package ar.edu.uade.ui.peticion;
 
 import ar.edu.uade.controller.PeticionController;
 import ar.edu.uade.model.dto.PeticionDTO;
+import ar.edu.uade.ui.estudio.EstudioUI;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -14,8 +15,8 @@ public class PeticionTableModel extends AbstractTableModel {
     private final PeticionController peticionController;
 
     private final List<PeticionDTO> peticiones;
-    protected String[] columnNames = new String[]{"Id", "Paciente", "Obra social", "Fecha carga", "Fecha entrega", "Sucursal","Editar", "Eliminar"};
-    protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
+    protected String[] columnNames = new String[]{"Id", "Paciente", "Obra social", "Fecha carga", "Fecha entrega", "Sucursal", "Resultados", "Editar", "Eliminar"};
+    protected Class[] columnClasses = new Class[] { String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class, JButton.class};
     private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public PeticionTableModel(PeticionController peticionController,List<PeticionDTO> peticiones) {
@@ -57,12 +58,27 @@ public class PeticionTableModel extends AbstractTableModel {
             case 5:
                 return peticiones.get(rowIndex).getSucursal().getNumero();
             case 6:
-                return setBotonEditar(getColumnName(columnIndex), rowIndex);
+                return setBotonResultados(getColumnName(columnIndex), rowIndex);
             case 7:
+                return setBotonEditar(getColumnName(columnIndex), rowIndex);
+            case 8:
                 return setBotonEliminar(getColumnName(columnIndex), rowIndex);
             default:
                 return null;
         }
+    }
+
+    private JButton setBotonResultados(String nombre, int rowIndex) {
+        final JButton button = new JButton(nombre);
+        button.addActionListener(e -> {
+            EstudioUI estudioUI = new EstudioUI(
+                    JOptionPane.getFrameForComponent(button),
+                    peticionController,
+                    peticiones.get(rowIndex)
+            );
+            estudioUI.setVisible(true);
+        });
+        return button;
     }
 
     private JButton setBotonEditar(String nombre, int rowIndex) {

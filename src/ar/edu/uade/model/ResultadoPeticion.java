@@ -12,7 +12,7 @@ public class ResultadoPeticion {
     }
 
     public ResultadoPeticion(ResultadoPeticionDTO resultadoPeticionDTO) {
-        this.resultado = resultadoPeticionDTO.getResultado();
+        this.resultado = resultadoPeticionDTO != null ? resultadoPeticionDTO.getResultado() : null;
     }
 
     public Double getResultado() {

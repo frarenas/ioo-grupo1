@@ -106,4 +106,8 @@ public class PracticaDTO {
     public static List<PracticaDTO> fromEntities(List<Practica> practicas) {
         return practicas.stream().map(PracticaDTO::fromEntity).collect(Collectors.toList());
     }
+
+    public String toString() {
+        return nombre;
+    }
 }
